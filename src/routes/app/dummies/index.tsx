@@ -1,7 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 
+import { DataTable } from '@/core/components/data-table';
 import { getDummiesList } from '@/modules/dummies/api';
+import { dummiesTableColumns } from '@/modules/dummies/data/data-table-settings';
 
 export const Route = createFileRoute('/app/dummies/')({
   component: RouteComponent,
@@ -10,12 +12,14 @@ export const Route = createFileRoute('/app/dummies/')({
 function RouteComponent() {
   const query = useQuery({
     queryKey: ['dummies'],
-    queryFn: () => getDummiesList(),
+    queryFn: () => getDummiesList({ pageSize: 10 }),
   });
 
   return (
-    <div>
-      <pre>{JSON.stringify(query.data?.items, null, 2)}</pre>
+    <div className="overflow-hidden rounded-md border">
+      {query.data && (
+        <DataTable data={query.data.items} columns={dummiesTableColumns} />
+      )}
     </div>
   );
 }
