@@ -190,4 +190,15 @@ export const core = {
     'to-a': 'A',
     'to-para': 'Para',
   },
+  paginator: {
+    itemsPerPage: 'Elementos por pagina',
+    showingItems:
+      'Mostrando <i>{{firstItem}}</i> a <i>{{lastItem}}</i> de <i>{{totalItems}}</i> elementos',
+    otherPages_one: 'Otra página',
+    otherPages_other: 'Otras {{count}} páginas',
+    goToFirstPage: 'Ir a la primera página',
+    gotoPreviousPage: 'Ir a la página anterior',
+    goToNextPage: 'Ir a la siguiente página',
+    goToLastPage: 'Ir a la última página',
+  },
 };
