@@ -1,3 +1,4 @@
+import type { DataTableColumnVisibilityState } from '@/core/types/data-table';
 import type { Dummy } from '@/modules/dummies/types';
 import type { ColumnDef } from '@tanstack/react-table';
 
@@ -61,3 +62,19 @@ export const dummiesTableColumns: ColumnDef<Dummy>[] = [
     cell: DataTableCell,
   },
 ];
+
+export const dummiesColumnsDefaultState: DataTableColumnVisibilityState<Dummy> =
+  {
+    count: true,
+    created_at: true,
+    description: true,
+    email: true,
+    id: true,
+    image: false,
+    key: true,
+    name: true,
+    price: true,
+    special: true,
+    status: true,
+    website: true,
+  };

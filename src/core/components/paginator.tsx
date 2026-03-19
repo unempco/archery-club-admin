@@ -35,8 +35,8 @@ export function Paginator({
   totalItems,
   pageSize,
   currentPage,
-  onPageChange,
-  onPageSizeChange,
+  setPage,
+  setPageSize,
 }: PaginatorProps) {
   const { t } = useTranslation();
 
@@ -58,8 +58,8 @@ export function Paginator({
         <div className="flex shrink-0 items-center gap-3">
           <Label htmlFor={rowsSelectorId}>{t('paginator.itemsPerPage')}</Label>
           <Select
-            defaultValue="10"
-            onValueChange={(value) => onPageSizeChange(Number(value))}
+            value={pageSize.toString()}
+            onValueChange={(value) => setPageSize(Number(value))}
           >
             <SelectTrigger
               id={rowsSelectorId}
@@ -98,7 +98,7 @@ export function Paginator({
                 variant="ghost"
                 size="icon"
                 disabled={isFirst}
-                onClick={() => onPageChange(1)}
+                onClick={() => setPage(1)}
               >
                 <CaretLineLeftIcon className="size-4" />
               </Button>
@@ -110,7 +110,7 @@ export function Paginator({
               variant="ghost"
               size="icon"
               disabled={isFirst}
-              onClick={() => onPageChange(currentPage - 1)}
+              onClick={() => setPage(currentPage - 1)}
             >
               <CaretLeftIcon className="size-4" />
             </Button>
@@ -143,7 +143,7 @@ export function Paginator({
                     variant={
                       Number(page) === currentPage ? 'secondary' : 'ghost'
                     }
-                    onClick={() => onPageChange(Number(page))}
+                    onClick={() => setPage(Number(page))}
                   >
                     {page}
                   </Button>
@@ -157,7 +157,7 @@ export function Paginator({
               variant="ghost"
               size="icon"
               disabled={isLast}
-              onClick={() => onPageChange(currentPage + 1)}
+              onClick={() => setPage(currentPage + 1)}
             >
               <CaretRightIcon className="size-4" />
             </Button>
@@ -169,7 +169,7 @@ export function Paginator({
                 variant="ghost"
                 size="icon"
                 disabled={isLast}
-                onClick={() => onPageChange(totalPages)}
+                onClick={() => setPage(totalPages)}
               >
                 <CaretLineRightIcon className="size-4" />
               </Button>
@@ -185,6 +185,6 @@ export type PaginatorProps = {
   totalItems: number;
   pageSize: number;
   currentPage: number;
-  onPageChange: (page: number) => void;
-  onPageSizeChange: (pageSize: number) => void;
+  setPage: (page: number) => void;
+  setPageSize: (pageSize: number) => void;
 };

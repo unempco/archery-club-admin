@@ -7,3 +7,7 @@ export type DataTableColumnSetting<TData extends Record<string, string>> = {
   headerDefault?: string;
   type: DataTableColumnType;
 };
+
+export type DataTableColumnVisibilityState<TData, TValue = boolean> = {
+  [key in keyof TData]: TValue;
+};
