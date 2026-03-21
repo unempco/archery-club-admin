@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 
 import { createContext, useCallback, useEffect, useState } from 'react';
 
-import { login, logout, verifySession } from '@/modules/auth/api';
+import { login, logout, verifySession } from '@/modules/auth/api/query-fns';
 import {
   getUserToken,
   removeUserToken,

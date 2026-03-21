@@ -15,7 +15,7 @@ export async function getDummiesList(
 ): Promise<PaginatedResponse<Dummy>> {
   const { page = 1, pageSize = 10 } = paginationParams;
 
-  await sleep(500);
+  await sleep(150);
 
   return {
     items: dummies.slice((page - 1) * pageSize, page * pageSize),
