@@ -1,5 +1,3 @@
-export const DEFAULT_PAGE_SIZES = [10, 25, 50, 100] as const;
-
 /**
  * Readonly strings that represents paths of base api versions
  */

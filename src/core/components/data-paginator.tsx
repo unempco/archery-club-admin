@@ -30,7 +30,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/core/components/ui/tooltip';
-import { DEFAULT_PAGE_SIZES } from '@/core/constants/api';
+import { DEFAULT_PAGE_SIZES } from '@/core/constants/search-params';
 import { useBreakpoint } from '@/core/hooks/use-breakpoint';
 import { usePagination } from '@/core/hooks/use-pagination';
 import { cn } from '@/core/lib/utils';

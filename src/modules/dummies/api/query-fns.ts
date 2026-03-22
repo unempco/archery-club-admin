@@ -1,4 +1,5 @@
-import type { PaginatedResponse, PaginationParams } from '@/core/types/api';
+import type { PaginatedResponse } from '@/core/types/api';
+import type { PaginationParams } from '@/core/types/search-params';
 import type { Dummy } from '@/modules/dummies/types';
 
 import { sleep } from '@/core/lib/utils';

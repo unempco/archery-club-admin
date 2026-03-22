@@ -1,4 +1,4 @@
-import type { PaginationParams } from '@/core/types/api';
+import type { PaginationParams } from '@/core/types/search-params';
 
 import { useState } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
@@ -10,7 +10,7 @@ import {
 
 import { DataPaginator } from '@/core/components/data-paginator';
 import { DataTable } from '@/core/components/data-table';
-import { paginationParamsSchema } from '@/core/types/api';
+import { paginationParamsSchema } from '@/core/types/search-params';
 import { dummiesQueryOptions } from '@/modules/dummies/api/query-options';
 import {
   dummiesColumnsDefaultState,

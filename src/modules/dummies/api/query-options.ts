@@ -1,4 +1,4 @@
-import type { PaginationParams } from '@/core/types/api';
+import type { PaginationParams } from '@/core/types/search-params';
 
 import { queryOptions } from '@tanstack/react-query';
 
