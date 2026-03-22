@@ -1,6 +1,6 @@
 import type { Table } from '@tanstack/react-table';
 
-import { CaretDownIcon } from '@phosphor-icons/react';
+import { CaretDownIcon, ColumnsPlusRightIcon } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/core/components/ui/button';
@@ -20,6 +20,7 @@ export function DataTableColumnSelector<TData>({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" className="ml-auto cursor-pointer">
+          <ColumnsPlusRightIcon />
           {t('nouns.column_other')}
           <CaretDownIcon />
         </Button>
