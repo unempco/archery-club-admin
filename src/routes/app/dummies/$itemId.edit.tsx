@@ -2,6 +2,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, notFound } from '@tanstack/react-router';
 
 import { NotFoundComponent } from '@/layout/components/not-found-component';
+import { createRouteHead } from '@/layout/lib/create-route-head';
 import { dummyQueryOptions } from '@/modules/dummies/api/query-options';
 
 export const Route = createFileRoute('/app/dummies/$itemId/edit')({
@@ -13,6 +14,7 @@ export const Route = createFileRoute('/app/dummies/$itemId/edit')({
 
     return data;
   },
+  head: createRouteHead({ type: 'item', titleAccessorKey: 'name' }),
   component: RouteComponent,
   notFoundComponent: NotFoundComponent,
 });

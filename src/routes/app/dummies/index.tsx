@@ -11,6 +11,7 @@ import {
 import { DataPaginator } from '@/core/components/data-paginator';
 import { DataTable } from '@/core/components/data-table';
 import { paginationParamsSchema } from '@/core/types/search-params';
+import { createRouteHead } from '@/layout/lib/create-route-head';
 import { dummiesIndexQueryOptions } from '@/modules/dummies/api/query-options';
 import {
   dummiesColumnsDefaultState,
@@ -22,6 +23,10 @@ export const Route = createFileRoute('/app/dummies/')({
   loaderDeps: ({ search }) => search,
   loader: async ({ context: { queryClient }, deps }) =>
     queryClient.ensureQueryData(dummiesIndexQueryOptions(deps)),
+  head: createRouteHead({
+    type: 'index',
+    titleI18nKey: 'layout:navItems.dummies',
+  }),
   component: RouteComponent,
 });
 
