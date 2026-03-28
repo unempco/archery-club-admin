@@ -14,6 +14,7 @@ import { Route as AppRouteRouteImport } from './routes/app/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppDashboardRouteImport } from './routes/app/dashboard'
+import { Route as AppDummiesRouteRouteImport } from './routes/app/dummies/route'
 import { Route as AppDummiesIndexRouteImport } from './routes/app/dummies/index'
 import { Route as AppDummiesItemIdEditRouteImport } from './routes/app/dummies/$itemId.edit'
 
@@ -42,21 +43,27 @@ const AppDashboardRoute = AppDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const AppDummiesIndexRoute = AppDummiesIndexRouteImport.update({
-  id: '/dummies/',
-  path: '/dummies/',
+const AppDummiesRouteRoute = AppDummiesRouteRouteImport.update({
+  id: '/dummies',
+  path: '/dummies',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppDummiesIndexRoute = AppDummiesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppDummiesRouteRoute,
+} as any)
 const AppDummiesItemIdEditRoute = AppDummiesItemIdEditRouteImport.update({
-  id: '/dummies/$itemId/edit',
-  path: '/dummies/$itemId/edit',
-  getParentRoute: () => AppRouteRoute,
+  id: '/$itemId/edit',
+  path: '/$itemId/edit',
+  getParentRoute: () => AppDummiesRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteRouteWithChildren
   '/login': typeof LoginRoute
+  '/app/dummies': typeof AppDummiesRouteRouteWithChildren
   '/app/dashboard': typeof AppDashboardRoute
   '/app/': typeof AppIndexRoute
   '/app/dummies/': typeof AppDummiesIndexRoute
@@ -75,6 +82,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/app': typeof AppRouteRouteWithChildren
   '/login': typeof LoginRoute
+  '/app/dummies': typeof AppDummiesRouteRouteWithChildren
   '/app/dashboard': typeof AppDashboardRoute
   '/app/': typeof AppIndexRoute
   '/app/dummies/': typeof AppDummiesIndexRoute
@@ -86,6 +94,7 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/login'
+    | '/app/dummies'
     | '/app/dashboard'
     | '/app/'
     | '/app/dummies/'
@@ -103,6 +112,7 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/login'
+    | '/app/dummies'
     | '/app/dashboard'
     | '/app/'
     | '/app/dummies/'
@@ -152,35 +162,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDashboardRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/app/dummies': {
+      id: '/app/dummies'
+      path: '/dummies'
+      fullPath: '/app/dummies'
+      preLoaderRoute: typeof AppDummiesRouteRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/app/dummies/': {
       id: '/app/dummies/'
-      path: '/dummies'
+      path: '/'
       fullPath: '/app/dummies/'
       preLoaderRoute: typeof AppDummiesIndexRouteImport
-      parentRoute: typeof AppRouteRoute
+      parentRoute: typeof AppDummiesRouteRoute
     }
     '/app/dummies/$itemId/edit': {
       id: '/app/dummies/$itemId/edit'
-      path: '/dummies/$itemId/edit'
+      path: '/$itemId/edit'
       fullPath: '/app/dummies/$itemId/edit'
       preLoaderRoute: typeof AppDummiesItemIdEditRouteImport
-      parentRoute: typeof AppRouteRoute
+      parentRoute: typeof AppDummiesRouteRoute
     }
   }
 }
 
-interface AppRouteRouteChildren {
-  AppDashboardRoute: typeof AppDashboardRoute
-  AppIndexRoute: typeof AppIndexRoute
+interface AppDummiesRouteRouteChildren {
   AppDummiesIndexRoute: typeof AppDummiesIndexRoute
   AppDummiesItemIdEditRoute: typeof AppDummiesItemIdEditRoute
 }
 
-const AppRouteRouteChildren: AppRouteRouteChildren = {
-  AppDashboardRoute: AppDashboardRoute,
-  AppIndexRoute: AppIndexRoute,
+const AppDummiesRouteRouteChildren: AppDummiesRouteRouteChildren = {
   AppDummiesIndexRoute: AppDummiesIndexRoute,
   AppDummiesItemIdEditRoute: AppDummiesItemIdEditRoute,
+}
+
+const AppDummiesRouteRouteWithChildren = AppDummiesRouteRoute._addFileChildren(
+  AppDummiesRouteRouteChildren,
+)
+
+interface AppRouteRouteChildren {
+  AppDummiesRouteRoute: typeof AppDummiesRouteRouteWithChildren
+  AppDashboardRoute: typeof AppDashboardRoute
+  AppIndexRoute: typeof AppIndexRoute
+}
+
+const AppRouteRouteChildren: AppRouteRouteChildren = {
+  AppDummiesRouteRoute: AppDummiesRouteRouteWithChildren,
+  AppDashboardRoute: AppDashboardRoute,
+  AppIndexRoute: AppIndexRoute,
 }
 
 const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(

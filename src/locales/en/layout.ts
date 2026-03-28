@@ -20,6 +20,7 @@ export const layout = {
     english: 'English',
   },
   navItems: {
+    home: 'Home',
     dashboard: 'Dashboard',
     settings: 'Settings',
     getHelp: 'Get Help',

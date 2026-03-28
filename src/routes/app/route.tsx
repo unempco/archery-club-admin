@@ -5,6 +5,7 @@ import { SidebarInset, SidebarProvider } from '@/core/components/ui/sidebar';
 import { NotFoundComponent } from '@/layout/components/not-found-component';
 import { PageHeader } from '@/layout/components/page-header';
 import { SidebarPrimary } from '@/layout/components/sidebar-primary';
+import { createRouteHead } from '@/layout/lib/create-route-head';
 
 export const Route = createFileRoute('/app')({
   beforeLoad: async ({ context, location }) => {
@@ -19,6 +20,10 @@ export const Route = createFileRoute('/app')({
       });
     }
   },
+  head: createRouteHead({
+    type: 'index',
+    titleI18nKey: 'layout:navItems.home',
+  }),
   component: AppLayout,
   notFoundComponent: NotFoundComponent,
   errorComponent: () => <p>Ocurrió un error</p>,

@@ -3,6 +3,7 @@ import type { CellContext } from '@tanstack/react-table';
 
 import { DotsThreeIcon, PencilIcon, TrashIcon } from '@phosphor-icons/react';
 import { useNavigate } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/core/components/ui/button';
 import {
@@ -14,6 +15,8 @@ import {
 } from '@/core/components/ui/dropdown-menu';
 
 export function DummiesDataActions({ row, ...restOfProps }: DataActionsProps) {
+  const { t } = useTranslation();
+
   const itemId = row.original.id;
 
   const navigate = useNavigate();
@@ -30,12 +33,12 @@ export function DummiesDataActions({ row, ...restOfProps }: DataActionsProps) {
           onClick={() => navigate({ to: `/app/dummies/${itemId}/edit` })}
         >
           <PencilIcon />
-          Edit
+          {t('actions.edit')}
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem variant="destructive">
           <TrashIcon />
-          Delete
+          {t('actions.delete')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
