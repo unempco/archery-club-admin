@@ -1,4 +1,4 @@
-import type { PaginationPageSize } from '@/core/types/search-params';
+import type { PaginationSearchParams } from '@/core/types/search-params';
 
 import { useId } from 'react';
 import {
@@ -7,6 +7,7 @@ import {
   CaretLineRightIcon,
   CaretRightIcon,
 } from '@phosphor-icons/react';
+import { Link, useNavigate } from '@tanstack/react-router';
 import { Trans, useTranslation } from 'react-i18next';
 
 import { Button } from '@/core/components/ui/button';
@@ -39,12 +40,11 @@ export function DataPaginator({
   totalItems,
   pageSize,
   currentPage,
-  setPage,
-  setPageSize,
   className,
   ...restOfProps
 }: PaginatorProps) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const rowsSelectorId = useId();
   const { isMobile, isTablet, isDesktop } = useBreakpoint();
@@ -56,7 +56,7 @@ export function DataPaginator({
       siblingCount: isMobile ? 0 : isTablet ? 1 : 2,
     });
 
-  if (totalPages <= 1) return null;
+  if (totalItems <= 1) return null;
 
   return (
     <div
@@ -72,7 +72,14 @@ export function DataPaginator({
           <Select
             value={pageSize.toString()}
             onValueChange={(value) =>
-              setPageSize(Number(value) as PaginationPageSize)
+              navigate({
+                /* @ts-expect-error Typescript is unable to know types from every route from here but search params update is hard to lead to critical errors*/
+                search: (prev) => ({
+                  ...prev,
+                  page: 1,
+                  pageSize: Number(value),
+                }),
+              })
             }
           >
             <SelectTrigger
@@ -114,9 +121,16 @@ export function DataPaginator({
                 variant="ghost"
                 size="icon"
                 disabled={isFirst}
-                onClick={() => setPage(1)}
               >
-                <CaretLineLeftIcon className="size-4" />
+                <Link
+                  to="."
+                  search={(prev: PaginationSearchParams) => ({
+                    ...prev,
+                    page: 1,
+                  })}
+                >
+                  <CaretLineLeftIcon className="size-4" />
+                </Link>
               </Button>
             </PaginationItem>
           )}
@@ -126,9 +140,16 @@ export function DataPaginator({
               variant="ghost"
               size="icon"
               disabled={isFirst}
-              onClick={() => setPage(currentPage - 1)}
             >
-              <CaretLeftIcon className="size-4" />
+              <Link
+                to="."
+                search={(prev: PaginationSearchParams) => ({
+                  ...prev,
+                  page: currentPage - 1,
+                })}
+              >
+                <CaretLeftIcon className="size-4" />
+              </Link>
             </Button>
           </PaginationItem>
           {pages.map((page, i) => {
@@ -159,9 +180,17 @@ export function DataPaginator({
                     variant={
                       Number(page) === currentPage ? 'secondary' : 'ghost'
                     }
-                    onClick={() => setPage(Number(page))}
+                    asChild
                   >
-                    {page}
+                    <Link
+                      to="."
+                      search={(prev: PaginationSearchParams) => ({
+                        ...prev,
+                        page,
+                      })}
+                    >
+                      {page}
+                    </Link>
                   </Button>
                 )}
               </PaginationItem>
@@ -173,9 +202,16 @@ export function DataPaginator({
               variant="ghost"
               size="icon"
               disabled={isLast}
-              onClick={() => setPage(currentPage + 1)}
             >
-              <CaretRightIcon className="size-4" />
+              <Link
+                to="."
+                search={(prev: PaginationSearchParams) => ({
+                  ...prev,
+                  page: currentPage + 1,
+                })}
+              >
+                <CaretRightIcon className="size-4" />
+              </Link>
             </Button>
           </PaginationItem>
           {!isMobile && (
@@ -185,9 +221,16 @@ export function DataPaginator({
                 variant="ghost"
                 size="icon"
                 disabled={isLast}
-                onClick={() => setPage(totalPages)}
               >
-                <CaretLineRightIcon className="size-4" />
+                <Link
+                  to="."
+                  search={(prev: PaginationSearchParams) => ({
+                    ...prev,
+                    page: totalPages,
+                  })}
+                >
+                  <CaretLineRightIcon className="size-4" />
+                </Link>
               </Button>
             </PaginationItem>
           )}
@@ -201,6 +244,4 @@ export type PaginatorProps = React.ComponentProps<'div'> & {
   totalItems: number;
   pageSize: number;
   currentPage: number;
-  setPage: (page: number) => void;
-  setPageSize: (pageSize: PaginationPageSize) => void;
 };
