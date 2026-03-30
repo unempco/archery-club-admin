@@ -1,26 +1,27 @@
-import type { PaginationParams } from '@/core/types/search-params';
+import type { DummiesSearchParams } from '@/modules/dummies/types';
 
 import { useState } from 'react';
+import { PlusIcon } from '@phosphor-icons/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import {
-  createFileRoute,
-  useNavigate,
-  useSearch,
-} from '@tanstack/react-router';
+import { createFileRoute, useSearch } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 
 import { DataPaginator } from '@/core/components/data-paginator';
+import { DataSearch } from '@/core/components/data-search';
 import { DataTable } from '@/core/components/data-table';
-import { paginationParamsSchema } from '@/core/types/search-params';
+import { Button } from '@/core/components/ui/button';
+import { Typography } from '@/core/components/ui/typography';
 import { createRouteHead } from '@/layout/lib/create-route-head';
 import { dummiesIndexQueryOptions } from '@/modules/dummies/api/query-options';
 import {
   dummiesColumnsDefaultState,
   dummiesTableColumns,
 } from '@/modules/dummies/data/data-table-settings';
+import { dummiesSearchSchema } from '@/modules/dummies/schemas';
 
 export const Route = createFileRoute('/app/dummies/')({
-  validateSearch: paginationParamsSchema,
-  loaderDeps: ({ search }) => search,
+  validateSearch: dummiesSearchSchema,
+  loaderDeps: ({ search }): DummiesSearchParams => search,
   loader: async ({ context: { queryClient }, deps }) =>
     queryClient.ensureQueryData(dummiesIndexQueryOptions(deps)),
   head: createRouteHead({
@@ -31,8 +32,9 @@ export const Route = createFileRoute('/app/dummies/')({
 });
 
 function RouteComponent() {
+  const { t } = useTranslation();
+
   const search = useSearch({ from: '/app/dummies/' });
-  const navigate = useNavigate({ from: '/app/dummies/' });
   const { data } = useSuspenseQuery(dummiesIndexQueryOptions(search));
 
   // Should be part of columns settings schema
@@ -40,27 +42,30 @@ function RouteComponent() {
     dummiesColumnsDefaultState,
   );
 
-  function setPagination(updates: Partial<PaginationParams>) {
-    navigate({
-      search: (prev) => ({ ...prev, ...updates }),
-    });
-  }
-
   return (
-    <div className="min-h-full flex flex-col gap-2">
+    <div className="min-h-full flex flex-col gap-4">
+      <div className="flex justify-between">
+        <Typography variant="h1">{t('layout:navItems.dummies')}</Typography>
+        <div className="flex gap-2">
+          <Button>
+            <PlusIcon />
+            {t('dummies:actions.addNew')}
+          </Button>
+        </div>
+      </div>
       <DataTable
         data={data.items}
         columns={dummiesTableColumns}
         columnVisibility={columnVisibility}
         setColumnVisibility={setColumnVisibility}
-      />
+      >
+        <DataSearch />
+      </DataTable>
       <DataPaginator
         className="mt-auto"
         currentPage={search.page}
         pageSize={search.pageSize}
         totalItems={data.meta.total}
-        setPage={(page) => setPagination({ page })}
-        setPageSize={(pageSize) => setPagination({ pageSize, page: 1 })}
       />
     </div>
   );

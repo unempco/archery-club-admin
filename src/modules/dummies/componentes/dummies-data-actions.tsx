@@ -14,7 +14,7 @@ import {
   DropdownMenuTrigger,
 } from '@/core/components/ui/dropdown-menu';
 
-export function DummiesDataActions({ row, ...restOfProps }: DataActionsProps) {
+export function DummiesDataActions({ row }: DataActionsProps) {
   const { t } = useTranslation();
 
   const itemId = row.original.id;
@@ -24,7 +24,7 @@ export function DummiesDataActions({ row, ...restOfProps }: DataActionsProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" {...restOfProps}>
+        <Button variant="ghost" size="icon">
           <DotsThreeIcon weight="bold" />
         </Button>
       </DropdownMenuTrigger>
@@ -45,5 +45,4 @@ export function DummiesDataActions({ row, ...restOfProps }: DataActionsProps) {
   );
 }
 
-export type DataActionsProps = React.ComponentProps<'button'> &
-  CellContext<Dummy, unknown> & {};
+export type DataActionsProps = CellContext<Dummy, unknown> & {};

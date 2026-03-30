@@ -1,10 +1,10 @@
-import type { PaginationParams } from '@/core/types/search-params';
+import type { DummiesSearchParams } from '@/modules/dummies/types';
 
 import { queryOptions } from '@tanstack/react-query';
 
 import { getDummiesList, getDummyById } from '@/modules/dummies/api/query-fns';
 
-export const dummiesIndexQueryOptions = (params: PaginationParams) =>
+export const dummiesIndexQueryOptions = (params: DummiesSearchParams) =>
   queryOptions({
     queryKey: ['dummies', params],
     queryFn: () => getDummiesList(params),

@@ -16,6 +16,7 @@ export const dummiesTableColumns: ColumnDef<Dummy>[] = [
     },
     header: DataTableHeader,
     cell: DataTableCell,
+    enableHiding: false,
   },
   {
     accessorKey: 'name',
@@ -74,6 +75,7 @@ export const dummiesTableColumns: ColumnDef<Dummy>[] = [
   {
     id: 'actions',
     cell: DummiesDataActions,
+    enableHiding: false,
   },
 ];
 
