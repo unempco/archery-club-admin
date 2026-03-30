@@ -9,7 +9,7 @@ export function getDummiesFromLocalStorage(): Dummy[] {
   if (rawDummies) {
     return JSON.parse(rawDummies) as Dummy[];
   } else {
-    localStorage.setItem('dummies', dummies.toString());
+    localStorage.setItem('dummies', JSON.stringify(dummies));
     return dummies;
   }
 }
