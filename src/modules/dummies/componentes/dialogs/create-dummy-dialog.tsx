@@ -8,6 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/core/components/ui/dialog';
+import { onMutationError, onMutationSuccess } from '@/core/lib/mutation-toast';
 import { createDummyMutationOptions } from '@/modules/dummies/api/query-options';
 import { DummyForm } from '@/modules/dummies/componentes/forms/dummy-form';
 
@@ -28,7 +29,9 @@ export function CreateDummyDialog({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['dummies'] });
       onOpenChange(false);
+      onMutationSuccess(t, 'dialogs.wasCreated')();
     },
+    onError: onMutationError(t),
   });
 
   return (

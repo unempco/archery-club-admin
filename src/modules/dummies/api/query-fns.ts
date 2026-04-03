@@ -1,3 +1,5 @@
+/* Example api functions for dummies module. These functions simulate API calls using localStorage and timeouts. */
+
 import type { PaginatedResponse } from '@/core/types/api';
 import type {
   DummiesSearchParams,
@@ -5,6 +7,7 @@ import type {
   DummyFormData,
 } from '@/modules/dummies/types';
 
+import { NotOkResponseError } from '@/core/errors';
 import { isStringValid, sleep } from '@/core/lib/utils';
 import { getDummiesFromLocalStorage } from '@/modules/dummies/lib/utils';
 
@@ -46,13 +49,41 @@ export async function getDummiesList(
 export async function getDummyById(id: number) {
   await sleep(150);
 
-  return getDummiesFromLocalStorage().find((d) => d.id === id) || null;
+  const dummy = getDummiesFromLocalStorage().find((d) => d.id === id);
+
+  if (!dummy)
+    throw new NotOkResponseError({
+      title: 'Dummy not found',
+      detail: `Dummy with id ${id} doesn't exist.`,
+      code: 'NotFound',
+      status: 404,
+    });
+
+  return dummy;
 }
 
 export async function createDummy(dummy: DummyFormData) {
-  await sleep(150);
+  await sleep(500);
 
   const dummies = getDummiesFromLocalStorage();
+
+  if (dummies.some((d) => d.email === dummy.email)) {
+    throw new NotOkResponseError({
+      title: 'Email already exists',
+      detail: `Dummy with email ${dummy.email} already exists.`,
+      code: 'Conflict',
+      status: 409,
+    });
+  }
+
+  if (dummies.some((d) => d.key === dummy.key)) {
+    throw new NotOkResponseError({
+      title: 'Key already exists',
+      detail: `Dummy with key ${dummy.key} already exists.`,
+      code: 'Conflict',
+      status: 409,
+    });
+  }
 
   const newDummy: Dummy = {
     ...dummy,
@@ -67,13 +98,36 @@ export async function createDummy(dummy: DummyFormData) {
 }
 
 export async function updateDummy(id: number, dummy: DummyFormData) {
-  await sleep(150);
+  await sleep(500);
 
   const dummies = getDummiesFromLocalStorage();
 
   const index = dummies.findIndex((d) => d.id === id);
   if (index === -1) {
-    throw new Error('Dummy not found');
+    throw new NotOkResponseError({
+      title: 'Dummy not found',
+      detail: `Dummy with id ${id} doesn't exist.`,
+      code: 'NotFound',
+      status: 404,
+    });
+  }
+
+  if (dummies.some((d) => d.id !== id && d.email === dummy.email)) {
+    throw new NotOkResponseError({
+      title: 'Email already exists',
+      detail: `Dummy with email ${dummy.email} already exists.`,
+      code: 'Conflict',
+      status: 409,
+    });
+  }
+
+  if (dummies.some((d) => d.id !== id && d.key === dummy.key)) {
+    throw new NotOkResponseError({
+      title: 'Key already exists',
+      detail: `Dummy with key ${dummy.key} already exists.`,
+      code: 'Conflict',
+      status: 409,
+    });
   }
 
   const updatedDummy = {
@@ -95,7 +149,12 @@ export async function deleteDummy(id: number) {
 
   const index = dummies.findIndex((d) => d.id === id);
   if (index === -1) {
-    throw new Error('Dummy not found');
+    throw new NotOkResponseError({
+      title: 'Dummy not found',
+      detail: `Dummy with id ${id} doesn't exist.`,
+      code: 'NotFound',
+      status: 404,
+    });
   }
 
   dummies.splice(index, 1);

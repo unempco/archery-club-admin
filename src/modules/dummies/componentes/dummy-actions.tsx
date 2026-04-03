@@ -15,6 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/core/components/ui/dropdown-menu';
+import { onMutationError, onMutationSuccess } from '@/core/lib/mutation-toast';
 import { deleteDummyMutationOptions } from '@/modules/dummies/api/query-options';
 import { UpdateDummyDialog } from '@/modules/dummies/componentes/dialogs/update-dummy-dialog';
 
@@ -30,7 +31,9 @@ export function DummyActions({ row }: DataActionsProps) {
     ...deleteDummyMutationOptions(dummy.id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['dummies'] });
+      onMutationSuccess(t, 'dialogs.wasDeleted')();
     },
+    onError: onMutationError(t),
   });
 
   return (
