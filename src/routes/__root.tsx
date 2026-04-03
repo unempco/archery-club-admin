@@ -11,6 +11,7 @@ import {
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { useTranslation } from 'react-i18next';
 
+import { Toaster } from '@/core/components/ui/sonner';
 import { createRouteHead } from '@/layout/lib/create-route-head';
 import {
   getUserLocalePreference,
@@ -26,7 +27,7 @@ type RootRouteContext = {
 
 export const Route = createRootRouteWithContext<RootRouteContext>()({
   loader: ({ context: { queryClient } }) =>
-    queryClient.ensureQueryData(sessionQueryOptions), // 👈 runs before any beforeLoad
+    queryClient.ensureQueryData(sessionQueryOptions),
   head: createRouteHead({ type: 'root' }),
   component: RootLayout,
 });
@@ -45,6 +46,7 @@ export function RootLayout() {
     <>
       <HeadContent />
       <Outlet />
+      <Toaster duration={5_000} />
       <ReactQueryDevtools buttonPosition="bottom-left" />
       <TanStackRouterDevtools position="bottom-right" />
     </>
