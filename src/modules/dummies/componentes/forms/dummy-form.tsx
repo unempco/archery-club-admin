@@ -4,9 +4,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { FormInput } from '@/core/components/form/form-input';
-import { FormSelect } from '@/core/components/form/form-select';
-import { FormSwitch } from '@/core/components/form/form-switch';
+import { FormInput } from '@/core/components/form-fields/form-input';
+import { FormSelect } from '@/core/components/form-fields/form-select';
+import { FormSwitch } from '@/core/components/form-fields/form-switch';
 import { Button } from '@/core/components/ui/button';
 import { FieldGroup } from '@/core/components/ui/field';
 import { Spinner } from '@/core/components/ui/spinner';
