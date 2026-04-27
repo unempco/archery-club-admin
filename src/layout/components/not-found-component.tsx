@@ -15,7 +15,7 @@ export function NotFoundComponent() {
   const finalErrorStatusText = t('statusCodes:404.large');
 
   return (
-    <Card>
+    <Card className="animate-in slide-in-from-top-5 fade-in duration-250 ease-out">
       <CardContent className="flex flex-col items-center gap-4 py-16">
         <div className="flex flex-col items-center px-4 text-center">
           <Typography className="text-7xl sm:text-9xl">

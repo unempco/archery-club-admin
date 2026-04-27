@@ -59,7 +59,7 @@ function LoginComponent() {
         </AlertDescription>
       </Alert>
       <LoginForm
-        className="w-full max-w-[24rem] animate-in fade-in duration-1000"
+        className="w-full max-w-[24rem] animate-in fade-in slide-in-from-top-5 duration-500"
         onSubmit={(data) => loginMutation.mutate(data)}
         isLoading={loginMutation.isPending}
       />
