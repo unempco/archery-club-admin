@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, useSearch } from '@tanstack/react-router';
 
-import { DataPaginator } from '@/core/components/data-paginator';
-import { DataSearch } from '@/core/components/data-search';
-import { DataTable } from '@/core/components/data-table';
+import { DataPaginator } from '@/core/components/data/data-paginator';
+import { DataSearch } from '@/core/components/data/data-search';
+import { DataTable } from '@/core/components/data/data-table';
 import { createRouteHead } from '@/layout/lib/create-route-head';
 import { dummiesIndexQueryOptions } from '@/modules/dummies/api/query-options';
 import { DummiesHeader } from '@/modules/dummies/componentes/dummies-header';

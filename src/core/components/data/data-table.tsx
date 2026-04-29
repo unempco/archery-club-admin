@@ -8,7 +8,7 @@ import {
 } from '@tanstack/react-table';
 import { useTranslation } from 'react-i18next';
 
-import { DataTableColumnSelector } from '@/core/components/date-table/data-table-column-selector';
+import { DataTableColumnSelector } from '@/core/components/data/data-table-column-selector';
 import {
   Table,
   TableBody,

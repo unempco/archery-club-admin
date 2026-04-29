@@ -2,8 +2,8 @@ import type { DataTableColumnVisibilityState } from '@/core/types/data-table';
 import type { Dummy } from '@/modules/dummies/types';
 import type { ColumnDef } from '@tanstack/react-table';
 
-import { DataTableCell } from '@/core/components/date-table/data-table-cell';
-import { DataTableHeader } from '@/core/components/date-table/data-table-header';
+import { DataTableCell } from '@/core/components/data/data-table-cell';
+import { DataTableHeader } from '@/core/components/data/data-table-header';
 import { DataTableColumnType } from '@/core/constants/data-table';
 import { DummyActions } from '@/modules/dummies/componentes/dummy-actions';
 
