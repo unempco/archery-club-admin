@@ -1,4 +1,5 @@
 // modules/dummies/components/create-dummy-dialog.tsx
+import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 
@@ -7,23 +8,17 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from '@/core/components/ui/dialog';
 import { onMutationError, onMutationSuccess } from '@/core/lib/mutation-toast';
 import { createDummyMutationOptions } from '@/modules/dummies/api/query-options';
 import { DummyForm } from '@/modules/dummies/componentes/forms/dummy-form';
 
-type CreateDummyDialogProps = {
-  open: boolean;
-  onOpenChange: (v: boolean) => void;
-};
-
-export function CreateDummyDialog({
-  open,
-  onOpenChange,
-}: CreateDummyDialogProps) {
+export function CreateDummyDialogTrigger({ children }: CreateDummyDialogProps) {
   const { t } = useTranslation();
-  const queryClient = useQueryClient();
+  const [open, onOpenChange] = useState(false);
 
+  const queryClient = useQueryClient();
   const mutation = useMutation({
     ...createDummyMutationOptions,
     onSuccess: () => {
@@ -36,6 +31,7 @@ export function CreateDummyDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogTrigger>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>{t('dummies:actions.addNew')}</DialogTitle>
@@ -49,3 +45,7 @@ export function CreateDummyDialog({
     </Dialog>
   );
 }
+
+export type CreateDummyDialogProps = {
+  children: React.ReactNode;
+};

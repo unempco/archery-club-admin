@@ -1,20 +1,24 @@
 import type { DummiesSearchParams } from '@/modules/dummies/types';
 
 import { useState } from 'react';
+import { PlusIcon } from '@phosphor-icons/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, useSearch } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 
 import { DataPaginator } from '@/core/components/data/data-paginator';
 import { DataSearch } from '@/core/components/data/data-search';
 import { DataTable } from '@/core/components/data/data-table';
+import { Button } from '@/core/components/ui/button';
 import { createRouteHead } from '@/layout/lib/create-route-head';
 import { dummiesIndexQueryOptions } from '@/modules/dummies/api/query-options';
-import { DummiesHeader } from '@/modules/dummies/componentes/dummies-header';
+import { CreateDummyDialogTrigger } from '@/modules/dummies/componentes/dialogs/create-dummy-dialog-trigger';
 import {
   dummiesColumnsDefaultState,
   dummiesTableColumns,
 } from '@/modules/dummies/data/data-table-settings';
 import { dummiesSearchSchema } from '@/modules/dummies/schemas';
+import { PageHeader } from '@/modules/shared/components/page-header';
 
 export const Route = createFileRoute('/app/dummies/')({
   validateSearch: dummiesSearchSchema,
@@ -29,6 +33,8 @@ export const Route = createFileRoute('/app/dummies/')({
 });
 
 function RouteComponent() {
+  const { t } = useTranslation();
+
   const search = useSearch({ from: '/app/dummies/' });
   const { data } = useSuspenseQuery(dummiesIndexQueryOptions(search));
 
@@ -39,7 +45,14 @@ function RouteComponent() {
 
   return (
     <div className="min-h-full flex flex-col gap-4">
-      <DummiesHeader />
+      <PageHeader title={t('layout:navItems.dummies')}>
+        <CreateDummyDialogTrigger>
+          <Button>
+            <PlusIcon />
+            {t('dummies:actions.addNew')}
+          </Button>
+        </CreateDummyDialogTrigger>
+      </PageHeader>
       <DataTable
         data={data.items}
         columns={dummiesTableColumns}
