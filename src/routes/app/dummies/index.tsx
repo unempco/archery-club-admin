@@ -58,9 +58,8 @@ function RouteComponent() {
         columns={dummiesTableColumns}
         columnVisibility={columnVisibility}
         setColumnVisibility={setColumnVisibility}
-      >
-        <DataSearch />
-      </DataTable>
+        headerSlot={<DataSearch />}
+      />
       <DataPaginator
         className="mt-auto"
         currentPage={search.page}

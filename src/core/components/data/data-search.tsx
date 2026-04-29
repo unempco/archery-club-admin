@@ -37,7 +37,7 @@ export function DataSearch({
       className={cn('contents', className)}
       {...restOfProps}
     >
-      <InputGroup className="max-w-xs">
+      <InputGroup className="max-w-xs animate-in fade-in duration-300">
         <InputGroupInput
           name="search_input"
           value={searchValue}

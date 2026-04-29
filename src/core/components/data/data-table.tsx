@@ -23,7 +23,7 @@ export function DataTable<TData>({
   columns,
   columnVisibility,
   setColumnVisibility,
-  children,
+  headerSlot,
 }: DataTableProps<TData>) {
   const { t } = useTranslation();
 
@@ -41,10 +41,10 @@ export function DataTable<TData>({
   return (
     <>
       <div className="flex gap-2">
-        {children}
+        {headerSlot}
         <DataTableColumnSelector table={table} className="ml-auto" />
       </div>
-      <div className="overflow-hidden rounded-md border">
+      <div className="overflow-hidden rounded-md border animate-in fade-in duration-300">
         <Table>
           <TableHeader className="bg-muted sticky top-0">
             {table.getHeaderGroups().map((headerGroup) => (
@@ -105,5 +105,5 @@ export type DataTableProps<TData> = {
   setColumnVisibility: (
     visibilityState: DataTableColumnVisibilityState<TData>,
   ) => void;
-  children?: React.ReactNode;
+  headerSlot?: React.ReactNode;
 };

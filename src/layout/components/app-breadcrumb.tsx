@@ -30,7 +30,7 @@ export function AppBreadcrumb() {
   const showAnimation =
     'animate-in fill-mode-backwards slide-in-from-left-5 fade-in easy-out duration-500';
   const animationDelay = (idx: number) => ({
-    animationDelay: `${idx * 100}ms`,
+    animationDelay: `${idx * 100 + 200}ms`,
   });
 
   return (

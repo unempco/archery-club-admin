@@ -24,7 +24,10 @@ export function DataTableColumnSelector<TData>({
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className={cn('cursor-pointer', className)}
+          className={cn(
+            'cursor-pointer animate-in fade-in duration-300',
+            className,
+          )}
           {...restOfProps}
         >
           <ColumnsPlusRightIcon />

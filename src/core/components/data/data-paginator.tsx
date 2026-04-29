@@ -62,6 +62,7 @@ export function DataPaginator({
     <div
       className={cn(
         'flex w-full flex-wrap items-center justify-between gap-6 max-sm:justify-center',
+        'animate-in fade-in slide-in-from-bottom-95 duration-300',
         className,
       )}
       {...restOfProps}
