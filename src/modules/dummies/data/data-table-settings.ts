@@ -1,13 +1,20 @@
-import type { DataTableColumnVisibilityState } from '@/core/types/data-table';
 import type { Dummy } from '@/modules/dummies/types';
-import type { ColumnDef } from '@tanstack/react-table';
+import type { ColumnDef, VisibilityState } from '@tanstack/react-table';
 
 import { DataTableCell } from '@/core/components/data/data-table-cell';
+import { DataTableCheckboxCell } from '@/core/components/data/data-table-checkbox-cell';
+import { DataTableCheckboxHeader } from '@/core/components/data/data-table-checkbox-header';
 import { DataTableHeader } from '@/core/components/data/data-table-header';
 import { DataTableColumnType } from '@/core/constants/data-table';
 import { DummyActions } from '@/modules/dummies/componentes/dummy-actions';
 
 export const dummiesTableColumns: ColumnDef<Dummy>[] = [
+  {
+    id: 'select',
+    header: DataTableCheckboxHeader,
+    cell: DataTableCheckboxCell,
+    enableHiding: false,
+  },
   {
     accessorKey: 'id',
     meta: {
@@ -88,18 +95,17 @@ export const dummiesTableColumns: ColumnDef<Dummy>[] = [
   },
 ];
 
-export const dummiesColumnsDefaultState: DataTableColumnVisibilityState<Dummy> =
-  {
-    count: true,
-    created_at: true,
-    description: true,
-    email: true,
-    id: true,
-    image: false,
-    key: true,
-    name: true,
-    price: true,
-    special: true,
-    status: true,
-    website: true,
-  };
+export const dummiesColumnsDefaultState: VisibilityState = {
+  count: true,
+  created_at: true,
+  description: true,
+  email: true,
+  id: true,
+  image: false,
+  key: true,
+  name: true,
+  price: true,
+  special: true,
+  status: true,
+  website: true,
+};
