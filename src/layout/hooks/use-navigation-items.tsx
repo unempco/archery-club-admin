@@ -1,10 +1,15 @@
 import type { NavigationGroup, NavigationItem } from '@/layout/types';
 
 import {
-  BookmarksIcon,
-  ChartPieIcon,
+  BuildingOfficeIcon,
+  ChartDonutIcon,
   GearIcon,
   InfoIcon,
+  KanbanIcon,
+  SealCheckIcon,
+  TargetIcon,
+  UsersIcon,
+  UsersThreeIcon,
 } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
 
@@ -19,14 +24,42 @@ export function useNavigationItems(): UseNavigationItemsReturn {
           {
             title: t('layout:navItems.dashboard'),
             url: '/app/dashboard',
-            icon: ChartPieIcon,
-            permissions: 'dashboard.read',
+            icon: ChartDonutIcon,
           },
           {
-            title: t('layout:navItems.dummies'),
-            url: '/app/dummies',
-            icon: BookmarksIcon,
-            permissions: 'dummies.read',
+            title: t('branches:name'),
+            url: '/app/branches',
+            icon: BuildingOfficeIcon,
+          },
+          {
+            title: t('cycles:name'),
+            url: '/app/cycles',
+            icon: KanbanIcon,
+          },
+          {
+            title: t('groups:name'),
+            url: '/app/groups',
+            icon: UsersThreeIcon,
+          },
+          {
+            title: t('targets:name'),
+            url: '/app/targets',
+            icon: TargetIcon,
+          },
+        ],
+      },
+      {
+        label: t('layout:navItems.admin'),
+        items: [
+          {
+            title: t('users:name'),
+            url: '/app/users',
+            icon: UsersIcon,
+          },
+          {
+            title: t('roles:name'),
+            url: '/app/roles',
+            icon: SealCheckIcon,
           },
         ],
       },
