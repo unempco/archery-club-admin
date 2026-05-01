@@ -1,11 +1,11 @@
 import { DateFormat } from '@/core/constants/dates';
 
 export default {
-  name: 'React admin',
+  name: 'Administrator de Arquería BC',
   version: 'v1.0.0',
   brand: {
-    name: 'Paul2g.dev',
-    logoSrc: '/logo.svg',
+    name: 'Arquería BC',
+    logoSrc: '/logo.png',
   },
   time: {
     timeZone: 'America/Tijuana',
