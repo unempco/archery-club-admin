@@ -32,11 +32,7 @@ export function DataSearch({
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className={cn('contents', className)}
-      {...restOfProps}
-    >
+    <form onSubmit={handleSubmit} className={cn(className)} {...restOfProps}>
       <InputGroup className="max-w-xs animate-in fade-in duration-300">
         <InputGroupInput
           name="search_input"
@@ -50,7 +46,7 @@ export function DataSearch({
             <Button
               type="button"
               variant="ghost"
-              size="icon"
+              size="icon-sm"
               aria-label={t('core:actions.clear')}
               onClick={() => {
                 setSearchValue('');
@@ -64,10 +60,17 @@ export function DataSearch({
             </Button>
           </InputGroupAddon>
         )}
+        <InputGroupAddon align="inline-end">
+          <Button
+            type="submit"
+            variant="ghost"
+            size="icon-sm"
+            aria-label={t('actions.search')}
+          >
+            <MagnifyingGlassIcon />
+          </Button>
+        </InputGroupAddon>
       </InputGroup>
-      <Button type="submit" size="icon" aria-label={t('actions.search')}>
-        <MagnifyingGlassIcon />
-      </Button>
     </form>
   );
 }

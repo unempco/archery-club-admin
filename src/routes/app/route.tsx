@@ -34,7 +34,7 @@ function AppLayout() {
     >
       <NavigationProgress />
       <SidebarPrimary className="animate-in fill-mode-backwards fade-in slide-in-from-left-10 duration-250 ease-out" />
-      <SidebarInset>
+      <SidebarInset className="h-[100dvh]">
         <AppHeader className="animate-in fill-mode-backwards fade-in slide-in-from-top-10 duration-250 delay-250 ease-out" />
         <div className="grow p-6">
           <Outlet />

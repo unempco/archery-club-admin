@@ -5,12 +5,12 @@ import { useTranslation } from 'react-i18next';
 
 import { BadgeList } from '@/core/components/badge-list';
 import { CheckMark } from '@/core/components/check-mark';
-import { Money } from '@/core/components/money';
 import { StatusBadge } from '@/core/components/status-badge';
 import { Badge } from '@/core/components/ui/badge';
 import { Button } from '@/core/components/ui/button';
 import { DataTableColumnType } from '@/core/constants/data-table';
 import { formatDate } from '@/core/lib/dates';
+import { formatPrice, formatUrl } from '@/core/lib/utils';
 import projectConfig from '@/project.config';
 
 export function DataTableCell<TData>({
@@ -37,7 +37,7 @@ export function DataTableCell<TData>({
     case DataTableColumnType.BOOLEAN:
       return <CheckMark value={value} />;
     case DataTableColumnType.MONEY:
-      return <Money money={{ amount: Number(value), currencyCode: 'USD' }} />;
+      return <span>{formatPrice(value as number)}</span>;
     case DataTableColumnType.BADGES:
       return <BadgeList values={value as Array<string>} />;
     case DataTableColumnType.STATUS:
@@ -73,8 +73,8 @@ export function DataTableCell<TData>({
       return (
         <a href={value as string} target="_blank" rel="noopener noreferrer">
           <Button variant="outline" size="xs">
+            {formatUrl(value as string)}
             <ArrowSquareOutIcon />
-            {value as string}
           </Button>
         </a>
       );

@@ -2,10 +2,11 @@ import type { Locale } from '@/layout/constants/locales';
 
 import {
   defaultProjectLocale,
-  LOCALE_LOCAL_STORAGE_KEY,
   localeData,
   locales,
 } from '@/layout/constants/locales';
+
+const LOCALE_LOCAL_STORAGE_KEY = 'preferences.app.lang' as const;
 
 export function getUserLocalePreference(): Locale {
   const localStorageLocale = localStorage.getItem(LOCALE_LOCAL_STORAGE_KEY);

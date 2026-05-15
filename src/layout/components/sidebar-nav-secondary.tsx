@@ -8,12 +8,15 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from '@/core/components/ui/sidebar';
 
 export function SidebarNavSecondary({
   items,
   ...props
 }: SidebarNavSecondaryProps) {
+  const { setOpenMobile } = useSidebar();
+
   return (
     <SidebarGroup {...props}>
       <SidebarGroupContent>
@@ -24,6 +27,7 @@ export function SidebarNavSecondary({
                 <Link
                   to={item.url}
                   className="data-[status='active']:bg-secondary/80 data-[status='active']:font-semibold"
+                  onClick={() => setOpenMobile(false)}
                 >
                   {item.icon && (
                     <>

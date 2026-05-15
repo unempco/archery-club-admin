@@ -1,5 +1,3 @@
-export const LOCALE_LOCAL_STORAGE_KEY = 'vite-ui-lang' as const;
-
 export const localeData = {
   'en-US': {
     langKey: 'en',
