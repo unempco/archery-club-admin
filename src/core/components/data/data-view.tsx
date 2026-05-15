@@ -57,7 +57,7 @@ export function DataView<TData>({
 
   return (
     <div
-      className={cn('max-sm:mb-8 relative flex flex-col gap-4', className)}
+      className={cn('max-sm:mb-8 grow relative flex flex-col gap-4', className)}
       {...restOfProps}
     >
       <div className="flex justify-between gap-2">
@@ -106,7 +106,7 @@ export function DataView<TData>({
         </div>
       )}
       <DataPaginator
-        className="max-sm:fixed max-sm:bottom-0 max-sm:left-0 max-sm:py-2 bg-background"
+        className="max-sm:fixed max-sm:bottom-0 max-sm:left-0 max-sm:py-2 mt-auto bg-background"
         currentPage={pagination.currentPage}
         pageSize={pagination.pageSize}
         totalItems={pagination.totalItems}
