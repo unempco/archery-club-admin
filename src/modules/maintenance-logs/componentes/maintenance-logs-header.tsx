@@ -5,11 +5,16 @@ import { Button } from '@/core/components/ui/button';
 import { CreateMaintenanceLogDialogTrigger } from '@/modules/maintenance-logs/componentes/dialogs/create-maintenance-log-dialog-trigger';
 import { PageHeader } from '@/modules/shared/components/page-header';
 
-export function TargetMaintenanceLogsHeader() {
+export function MaintenanceLogsHeader({
+  asSubtitle,
+}: MaintenanceLogsHeaderProps) {
   const { t } = useTranslation();
 
   return (
-    <PageHeader titleVariant="h3" title={t('maintenanceLogs:name')}>
+    <PageHeader
+      title={t('maintenanceLogs:name')}
+      titleVariant={asSubtitle ? 'h2' : 'h1'}
+    >
       <CreateMaintenanceLogDialogTrigger>
         <Button>
           <PlusIcon />
@@ -19,3 +24,7 @@ export function TargetMaintenanceLogsHeader() {
     </PageHeader>
   );
 }
+
+export type MaintenanceLogsHeaderProps = {
+  asSubtitle?: boolean;
+};

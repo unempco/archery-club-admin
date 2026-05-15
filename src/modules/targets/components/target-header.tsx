@@ -27,7 +27,12 @@ export function TargetHeader({ target }: TargetHeaderProps) {
 
   return (
     <>
-      <PageHeader title={target.name} itemId={target.id}>
+      <PageHeader
+        title={target.name}
+        itemId={target.id}
+        enableBack
+        backToFallback="/app/targets/"
+      >
         <PermissionGuard permissions={ApiPermissions.Targets.UPDATE}>
           <Button onClick={() => setEditOpen(true)}>
             <PencilIcon />

@@ -27,7 +27,12 @@ export function GroupHeader({ group }: GroupHeaderProps) {
 
   return (
     <>
-      <PageHeader title={group.name} itemId={group.id}>
+      <PageHeader
+        title={group.name}
+        itemId={group.id}
+        enableBack
+        backToFallback="/app/groups/"
+      >
         <PermissionGuard permissions={ApiPermissions.Groups.UPDATE}>
           <Button onClick={() => setEditOpen(true)}>
             <PencilIcon />

@@ -7,11 +7,14 @@ import { CreateGroupDialogTrigger } from '@/modules/groups/components/dialogs/cr
 import { PageHeader } from '@/modules/shared/components/page-header';
 import { ApiPermissions } from '@/modules/shared/constants/permissions';
 
-export function GroupsHeader({ titleVariant = 'h1' }: GroupsHeaderProps) {
+export function GroupsHeader({ asSubtitle }: GroupsHeaderProps) {
   const { t } = useTranslation();
 
   return (
-    <PageHeader title={t('groups:name')} titleVariant={titleVariant}>
+    <PageHeader
+      title={t('groups:name')}
+      titleVariant={asSubtitle ? 'h2' : 'h1'}
+    >
       <PermissionGuard permissions={ApiPermissions.Groups.CREATE}>
         <CreateGroupDialogTrigger>
           <Button>
@@ -25,5 +28,5 @@ export function GroupsHeader({ titleVariant = 'h1' }: GroupsHeaderProps) {
 }
 
 export type GroupsHeaderProps = {
-  titleVariant?: 'h1' | 'h2' | 'h3';
+  asSubtitle?: boolean;
 };

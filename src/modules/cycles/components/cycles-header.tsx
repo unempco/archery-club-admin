@@ -7,11 +7,14 @@ import { CreateCycleDialogTrigger } from '@/modules/cycles/components/dialogs/cr
 import { PageHeader } from '@/modules/shared/components/page-header';
 import { ApiPermissions } from '@/modules/shared/constants/permissions';
 
-export function CyclesHeader({ titleVariant = 'h1' }: CyclesHeaderProps) {
+export function CyclesHeader({ asSubtitle }: CyclesHeaderProps) {
   const { t } = useTranslation();
 
   return (
-    <PageHeader title={t('cycles:name')} titleVariant={titleVariant}>
+    <PageHeader
+      title={t('cycles:name')}
+      titleVariant={asSubtitle ? 'h2' : 'h1'}
+    >
       <PermissionGuard permissions={ApiPermissions.Cycles.CREATE}>
         <CreateCycleDialogTrigger>
           <Button>
@@ -25,5 +28,5 @@ export function CyclesHeader({ titleVariant = 'h1' }: CyclesHeaderProps) {
 }
 
 export type CyclesHeaderProps = {
-  titleVariant?: 'h1' | 'h2' | 'h3';
+  asSubtitle?: boolean;
 };

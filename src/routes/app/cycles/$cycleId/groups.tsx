@@ -30,7 +30,7 @@ function RouteComponent() {
 
   return (
     <>
-      <GroupsHeader titleVariant="h3" />
+      <GroupsHeader asSubtitle />
       <DataView
         preferencesNamespace="cycles.groups"
         items={data.items}

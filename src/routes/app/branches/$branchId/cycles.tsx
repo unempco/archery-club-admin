@@ -30,7 +30,7 @@ function RouteComponent() {
 
   return (
     <>
-      <CyclesHeader titleVariant="h3" />
+      <CyclesHeader asSubtitle />
       <DataView
         preferencesNamespace="branches.cycles"
         items={data.items}

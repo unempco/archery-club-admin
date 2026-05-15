@@ -7,7 +7,7 @@ import { DataSearch } from '@/core/components/data/data-search';
 import { DataView } from '@/core/components/data/data-view';
 import { createRouteHead } from '@/layout/lib/create-route-head';
 import { targetMaintenanceLogsQueryOptions } from '@/modules/maintenance-logs/api/query-options';
-import { TargetMaintenanceLogsHeader } from '@/modules/maintenance-logs/componentes/target-maintenance-logs-header';
+import { MaintenanceLogsHeader } from '@/modules/maintenance-logs/componentes/maintenance-logs-header';
 import { maintenanceLogsTableColumns } from '@/modules/maintenance-logs/data/data-table-settings';
 import { maintenanceLogsSearchSchema } from '@/modules/maintenance-logs/schemas';
 
@@ -37,7 +37,7 @@ function RouteComponent() {
 
   return (
     <div className="contents">
-      <TargetMaintenanceLogsHeader />
+      <MaintenanceLogsHeader asSubtitle />
       <DataView
         preferencesNamespace="targets.maintenanceLogs"
         items={data.items}
