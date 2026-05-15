@@ -2,8 +2,8 @@ import type { Group } from '@/modules/groups/types';
 
 import { useState } from 'react';
 import {
+  ClockCountdownIcon,
   DotsThreeIcon,
-  EyeIcon,
   PencilIcon,
   TrashIcon,
 } from '@phosphor-icons/react';
@@ -40,7 +40,7 @@ export function GroupActions({ group }: GroupActionsProps) {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="icon">
-            <DotsThreeIcon weight="bold" />
+            <DotsThreeIcon weight="bold" className="size-6" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -55,8 +55,8 @@ export function GroupActions({ group }: GroupActionsProps) {
                 })
               }
             >
-              <EyeIcon />
-              {t('actions.view')}
+              <ClockCountdownIcon />
+              {t('groups:actions.viewSessions')}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
           </PermissionGuard>

@@ -8,7 +8,9 @@ export const groups = {
     duration: 'Duration (minutes)',
     cycle: 'Cycle',
   },
-  actions: {},
+  actions: {
+    viewSessions: 'View Sessions',
+  },
   constants: {
     weekdays: [
       'Sunday',

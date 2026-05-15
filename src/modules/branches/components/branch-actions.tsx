@@ -3,7 +3,7 @@ import type { Branch } from '@/modules/branches/types';
 import { useState } from 'react';
 import {
   DotsThreeIcon,
-  EyeIcon,
+  KanbanIcon,
   PencilIcon,
   TrashIcon,
 } from '@phosphor-icons/react';
@@ -44,7 +44,7 @@ export function BranchActions({ branch }: BranchActionsProps) {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="icon">
-            <DotsThreeIcon weight="bold" />
+            <DotsThreeIcon weight="bold" className="size-6" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -57,8 +57,8 @@ export function BranchActions({ branch }: BranchActionsProps) {
                 })
               }
             >
-              <EyeIcon />
-              {t('branches:actions.view')}
+              <KanbanIcon />
+              {t('branches:actions.viewCycles')}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
           </PermissionGuard>

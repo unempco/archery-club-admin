@@ -9,6 +9,7 @@ export const branches = {
   },
   actions: {
     viewCycles: 'Ver ciclos',
+    viewTargets: 'Ver dianas',
   },
   messages: {},
   filters: {},

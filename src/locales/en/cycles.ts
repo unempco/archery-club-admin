@@ -7,7 +7,9 @@ export const cycles = {
     sessionCount: 'Session Count',
     branch: 'Branch',
   },
-  actions: {},
+  actions: {
+    viewGroups: 'View Groups',
+  },
   messages: {},
   filters: {},
   dialogs: {

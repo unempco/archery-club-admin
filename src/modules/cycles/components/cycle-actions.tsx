@@ -3,9 +3,9 @@ import type { Cycle } from '@/modules/cycles/types';
 import { useState } from 'react';
 import {
   DotsThreeIcon,
-  EyeIcon,
   PencilIcon,
   TrashIcon,
+  UsersThreeIcon,
 } from '@phosphor-icons/react';
 import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
@@ -40,7 +40,7 @@ export function CycleActions({ cycle }: CycleActionsProps) {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="icon">
-            <DotsThreeIcon weight="bold" />
+            <DotsThreeIcon weight="bold" className="size-6" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -53,8 +53,8 @@ export function CycleActions({ cycle }: CycleActionsProps) {
                 })
               }
             >
-              <EyeIcon />
-              {t('actions.view')}
+              <UsersThreeIcon />
+              {t('cycles:actions.viewGroups')}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
           </PermissionGuard>
