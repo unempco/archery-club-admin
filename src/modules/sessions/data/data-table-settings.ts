@@ -18,6 +18,15 @@ export const sessionsTableColumns: ColumnDef<Session>[] = [
     enableHiding: false,
   },
   {
+    accessorKey: 'key',
+    meta: {
+      headerI18nKey: 'sessions:fields.key',
+      columnType: DataTableColumnType.KEY,
+    },
+    header: DataTableHeader,
+    cell: DataTableCell,
+  },
+  {
     accessorKey: 'notes',
     meta: {
       headerI18nKey: 'sessions:fields.notes',

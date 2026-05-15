@@ -17,6 +17,15 @@ export const maintenanceLogsTableColumns: ColumnDef<MaintenanceLog>[] = [
     enableHiding: false,
   },
   {
+    accessorKey: 'key',
+    meta: {
+      headerI18nKey: 'maintenanceLogs:fields.key',
+      columnType: DataTableColumnType.KEY,
+    },
+    header: DataTableHeader,
+    cell: DataTableCell,
+  },
+  {
     accessorKey: 'notes',
     meta: {
       headerI18nKey: 'maintenanceLogs:fields.notes',

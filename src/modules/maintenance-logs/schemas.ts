@@ -5,6 +5,7 @@ import { paginationSearchSchema } from '@/core/types/search-params';
 export const maintenanceLogSchema = z.object({
   // Server-generated fields
   id: z.number(),
+  key: z.string(),
   // Form fields
   targetId: z.coerce.number('Target is required'),
   performedAt: z.coerce.date(),
