@@ -52,7 +52,7 @@ export function PageHeader({
         )}
         <Typography
           variant={titleVariant}
-          as="h1"
+          as={titleVariant}
           className="text-left line-clamp-1 animate-in fade-in slide-in-from-left-5 duration-300"
         >
           {title}
