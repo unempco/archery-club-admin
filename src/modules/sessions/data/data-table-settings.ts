@@ -1,5 +1,5 @@
 import type { Session } from '@/modules/sessions/types';
-import type { ColumnDef, VisibilityState } from '@tanstack/react-table';
+import type { ColumnDef } from '@tanstack/react-table';
 
 import { DataTableCell } from '@/core/components/data/data-table-cell';
 import { DataTableHeader } from '@/core/components/data/data-table-header';
@@ -68,5 +68,3 @@ export const sessionsTableColumns: ColumnDef<Session>[] = [
     enableHiding: false,
   },
 ];
-
-export const sessionsColumnsDefaultState: VisibilityState = {};

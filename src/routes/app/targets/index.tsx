@@ -1,20 +1,14 @@
 import type { TargetsSearchParams } from '@/modules/targets/types';
-import type { VisibilityState } from '@tanstack/react-table';
 
-import { useState } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 
-import { DataPaginator } from '@/core/components/data/data-paginator';
 import { DataSearch } from '@/core/components/data/data-search';
-import { DataTable } from '@/core/components/data/data-table';
+import { DataView } from '@/core/components/data/data-view';
 import { createRouteHead } from '@/layout/lib/create-route-head';
 import { targetsIndexQueryOptions } from '@/modules/targets/api/query-options';
 import { TargetsHeader } from '@/modules/targets/components/targets-header';
-import {
-  targetsColumnsDefaultState,
-  targetsTableColumns,
-} from '@/modules/targets/data/data-table-settings';
+import { targetsTableColumns } from '@/modules/targets/data/data-table-settings';
 import { targetsSearchSchema } from '@/modules/targets/schemas';
 
 export const Route = createFileRoute('/app/targets/')({
@@ -33,25 +27,15 @@ function RouteComponent() {
   const search = Route.useSearch();
   const { data } = useSuspenseQuery(targetsIndexQueryOptions(search));
 
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
-    targetsColumnsDefaultState,
-  );
-
   return (
     <div className="min-h-full flex flex-col gap-4">
       <TargetsHeader />
-      <DataTable
-        data={data.items}
-        columns={targetsTableColumns}
-        columnVisibility={columnVisibility}
-        setColumnVisibility={setColumnVisibility}
-        headerSlot={<DataSearch />}
-      />
-      <DataPaginator
-        className="mt-auto"
-        currentPage={search.page}
-        pageSize={search.pageSize}
-        totalItems={data.meta.totalItems}
+      <DataView
+        preferencesNamespace="targets"
+        items={data.items}
+        pagination={data.meta}
+        dataTableColumnsSettings={targetsTableColumns}
+        dataFiltersSlot={<DataSearch />}
       />
     </div>
   );

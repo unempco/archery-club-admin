@@ -1,20 +1,14 @@
 import type { BranchesSearchParams } from '@/modules/branches/types';
-import type { VisibilityState } from '@tanstack/react-table';
 
-import { useState } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 
-import { DataPaginator } from '@/core/components/data/data-paginator';
 import { DataSearch } from '@/core/components/data/data-search';
-import { DataTable } from '@/core/components/data/data-table';
+import { DataView } from '@/core/components/data/data-view';
 import { createRouteHead } from '@/layout/lib/create-route-head';
 import { branchesIndexQueryOptions } from '@/modules/branches/api/query-options';
 import { BranchesHeader } from '@/modules/branches/components/branches-header';
-import {
-  branchesColumnsDefaultState,
-  branchesTableColumns,
-} from '@/modules/branches/data/data-table-settings';
+import { branchesTableColumns } from '@/modules/branches/data/data-table-settings';
 import { branchesSearchSchema } from '@/modules/branches/schemas';
 
 export const Route = createFileRoute('/app/branches/')({
@@ -33,25 +27,15 @@ function RouteComponent() {
   const search = Route.useSearch();
   const { data } = useSuspenseQuery(branchesIndexQueryOptions(search));
 
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
-    branchesColumnsDefaultState,
-  );
-
   return (
     <div className="min-h-full flex flex-col gap-4">
       <BranchesHeader />
-      <DataTable
-        data={data.items}
-        columns={branchesTableColumns}
-        columnVisibility={columnVisibility}
-        setColumnVisibility={setColumnVisibility}
-        headerSlot={<DataSearch />}
-      />
-      <DataPaginator
-        className="mt-auto"
-        currentPage={search.page}
-        pageSize={search.pageSize}
-        totalItems={data.meta.totalItems}
+      <DataView
+        preferencesNamespace="branches"
+        items={data.items}
+        pagination={data.meta}
+        dataTableColumnsSettings={branchesTableColumns}
+        dataFiltersSlot={<DataSearch />}
       />
     </div>
   );
