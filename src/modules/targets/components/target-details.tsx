@@ -20,7 +20,7 @@ export function TargetDetails({ target, className }: TargetDetailsProps) {
   return (
     <div
       className={cn(
-        'grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-4',
+        'grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-2',
         className,
       )}
     >

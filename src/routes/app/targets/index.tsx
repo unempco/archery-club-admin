@@ -7,6 +7,7 @@ import { DataSearch } from '@/core/components/data/data-search';
 import { DataView } from '@/core/components/data/data-view';
 import { createRouteHead } from '@/layout/lib/create-route-head';
 import { targetsIndexQueryOptions } from '@/modules/targets/api/query-options';
+import { TargetCard } from '@/modules/targets/components/target-card';
 import { TargetsHeader } from '@/modules/targets/components/targets-header';
 import { targetsTableColumns } from '@/modules/targets/data/data-table-settings';
 import { targetsSearchSchema } from '@/modules/targets/schemas';
@@ -36,6 +37,9 @@ function RouteComponent() {
         pagination={data.meta}
         dataTableColumnsSettings={targetsTableColumns}
         dataFiltersSlot={<DataSearch />}
+        dataGridCardSlot={(target) => (
+          <TargetCard target={target} key={target.id} />
+        )}
       />
     </div>
   );
