@@ -34,8 +34,8 @@ export function AppBreadcrumb() {
   });
 
   return (
-    <Breadcrumb>
-      <BreadcrumbList>
+    <Breadcrumb className="overflow-auto no-scrollbar">
+      <BreadcrumbList className="!flex-nowrap">
         {crumbs.map((crumb, index) => {
           const isLast = index === crumbs.length - 1;
 

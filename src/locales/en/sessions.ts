@@ -6,7 +6,9 @@ export const sessions = {
     duration: 'Duration (minutes)',
     group: 'Group',
   },
-  actions: {},
+  actions: {
+    viewTargets: 'View Targets',
+  },
   dialogs: {
     update: {
       title: 'Edit Session',

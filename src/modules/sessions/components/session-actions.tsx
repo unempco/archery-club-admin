@@ -30,7 +30,7 @@ export function SessionActions({ session }: SessionsActionsProps) {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="icon">
-            <DotsThreeIcon weight="bold" />
+            <DotsThreeIcon weight="bold" className="size-6" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>

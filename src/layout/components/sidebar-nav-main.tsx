@@ -17,10 +17,13 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
+  useSidebar,
 } from '@/core/components/ui/sidebar';
 import { useAuth } from '@/modules/auth/hooks/use-auth';
 
 export function SidebarNavMain({ groups, ...props }: SidebarNavMainProps) {
+  const { setOpenMobile } = useSidebar();
+
   const { hasPermissions } = useAuth();
 
   if (!groups.length) return null;
@@ -57,6 +60,7 @@ export function SidebarNavMain({ groups, ...props }: SidebarNavMainProps) {
                   <Link
                     to={item.url}
                     className="contents data-[status='active']:bg-secondary/80 data-[status='active']:font-semibold"
+                    onClick={() => setOpenMobile(false)}
                   >
                     {item.icon && <item.icon />}
                     <span>{item.title}</span>
@@ -88,6 +92,7 @@ export function SidebarNavMain({ groups, ...props }: SidebarNavMainProps) {
                           <Link
                             to={subItem.url}
                             className="data-[status='active']:bg-secondary/80 data-[status='active']:font-semibold"
+                            onClick={() => setOpenMobile(false)}
                           >
                             <span>{subItem.title}</span>
                           </Link>

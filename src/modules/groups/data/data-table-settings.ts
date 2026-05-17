@@ -1,5 +1,5 @@
 import type { Group } from '@/modules/groups/types';
-import type { ColumnDef, VisibilityState } from '@tanstack/react-table';
+import type { ColumnDef } from '@tanstack/react-table';
 
 import { DataTableCell } from '@/core/components/data/data-table-cell';
 import { DataTableHeader } from '@/core/components/data/data-table-header';
@@ -96,7 +96,3 @@ export const groupsTableColumns: ColumnDef<Group>[] = [
     enableHiding: false,
   },
 ];
-
-export const groupsColumnsDefaultState: VisibilityState = {
-  deletedAt: false,
-};

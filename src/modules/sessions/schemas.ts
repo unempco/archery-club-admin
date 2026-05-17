@@ -6,6 +6,7 @@ import { sessionStatuses } from '@/modules/sessions/constants';
 export const sessionSchema = z.object({
   // Server-generated fields
   id: z.number(),
+  key: z.string(),
   scheduledAt: z.string(),
   groupId: z.string(),
   // Form fields

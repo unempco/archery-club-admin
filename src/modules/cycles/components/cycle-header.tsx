@@ -27,7 +27,12 @@ export function CycleHeader({ cycle }: CycleHeaderProps) {
 
   return (
     <>
-      <PageHeader title={cycle.name} itemId={cycle.id}>
+      <PageHeader
+        title={cycle.name}
+        itemId={cycle.id}
+        enableBack
+        backToFallback="/app/cycles/"
+      >
         <PermissionGuard permissions={ApiPermissions.Cycles.UPDATE}>
           <Button onClick={() => setEditOpen(true)}>
             <PencilIcon />

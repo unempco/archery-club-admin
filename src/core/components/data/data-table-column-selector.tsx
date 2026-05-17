@@ -1,4 +1,5 @@
-import type { Table } from '@tanstack/react-table';
+import type { ColumnDef, VisibilityState } from '@tanstack/react-table';
+import type { ComponentProps, Dispatch, SetStateAction } from 'react';
 
 import { CaretDownIcon, ColumnsPlusRightIcon } from '@phosphor-icons/react';
 import { useTranslation } from 'react-i18next';
@@ -13,11 +14,19 @@ import {
 import { cn } from '@/core/lib/utils';
 
 export function DataTableColumnSelector<TData>({
-  table,
+  columns,
+  visibilityState,
+  setVisibilityState,
   className,
   ...restOfProps
 }: DataTableColumnSelectorProps<TData>) {
   const { t } = useTranslation();
+
+  const hideableColumns = columns.filter(
+    (column) =>
+      column.enableHiding !== false &&
+      (column.id ?? ('accessorKey' in column && column.accessorKey)),
+  );
 
   return (
     <DropdownMenu>
@@ -31,32 +40,36 @@ export function DataTableColumnSelector<TData>({
           {...restOfProps}
         >
           <ColumnsPlusRightIcon />
-          {t('core:nouns.column_other')}
+          <span className="max-sm:hidden">{t('core:nouns.column_other')}</span>
           <CaretDownIcon />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        {table
-          .getAllColumns()
-          .filter((column) => column.getCanHide())
-          .map((column) => {
-            return (
-              <DropdownMenuCheckboxItem
-                key={column.id}
-                className="capitalize cursor-pointer"
-                checked={column.getIsVisible()}
-                onCheckedChange={(value) => column.toggleVisibility(value)}
-              >
-                {t(column.columnDef.meta?.headerI18nKey || column.id)}
-              </DropdownMenuCheckboxItem>
-            );
-          })}
+        {hideableColumns.map((column) => {
+          const columnId = (column.id ??
+            ('accessorKey' in column && String(column.accessorKey))) as string;
+          const isVisible = visibilityState[columnId] ?? true;
+
+          return (
+            <DropdownMenuCheckboxItem
+              key={columnId}
+              className="capitalize cursor-pointer"
+              checked={isVisible}
+              onCheckedChange={(value) =>
+                setVisibilityState((prev) => ({ ...prev, [columnId]: value }))
+              }
+            >
+              {t(column.meta?.headerI18nKey || columnId)}
+            </DropdownMenuCheckboxItem>
+          );
+        })}
       </DropdownMenuContent>
     </DropdownMenu>
   );
 }
 
-export type DataTableColumnSelectorProps<TData> =
-  React.ComponentProps<'button'> & {
-    table: Table<TData>;
-  };
+export type DataTableColumnSelectorProps<TData> = ComponentProps<'button'> & {
+  columns: ColumnDef<TData>[];
+  visibilityState: VisibilityState;
+  setVisibilityState: Dispatch<SetStateAction<VisibilityState>>;
+};

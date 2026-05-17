@@ -27,7 +27,12 @@ export function BranchHeader({ branch }: BranchHeaderProps) {
 
   return (
     <>
-      <PageHeader title={branch.name} itemId={branch.id}>
+      <PageHeader
+        title={branch.name}
+        itemId={branch.id}
+        enableBack
+        backToFallback="/app/branches/"
+      >
         <PermissionGuard permissions={ApiPermissions.Branches.UPDATE}>
           <Button onClick={() => setEditOpen(true)}>
             <PencilIcon />

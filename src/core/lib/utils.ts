@@ -3,6 +3,8 @@ import type { ClassValue } from 'clsx';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
+import projectConfig from '@/project.config';
+
 /**
  * Supported casing formats for conversion.
  */
@@ -139,4 +141,20 @@ export function convertCase(
       throw new Error(`Unsupported format: ${_exhaustive}`);
     }
   }
+}
+
+export function formatUrl(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return url;
+  }
+}
+
+export function formatPrice(price: number, showCurrency?: boolean): string {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: projectConfig.money.currency,
+    currencyDisplay: showCurrency ? 'code' : 'symbol',
+  }).format(price);
 }

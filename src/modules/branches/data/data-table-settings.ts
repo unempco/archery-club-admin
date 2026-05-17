@@ -1,5 +1,5 @@
 import type { Branch } from '@/modules/branches/types';
-import type { ColumnDef, VisibilityState } from '@tanstack/react-table';
+import type { ColumnDef } from '@tanstack/react-table';
 
 import { DataTableCell } from '@/core/components/data/data-table-cell';
 import { DataTableHeader } from '@/core/components/data/data-table-header';
@@ -78,7 +78,3 @@ export const branchesTableColumns: ColumnDef<Branch>[] = [
     enableHiding: false,
   },
 ];
-
-export const branchesColumnsDefaultState: VisibilityState = {
-  deletedAt: false,
-};

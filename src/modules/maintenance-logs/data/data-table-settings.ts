@@ -1,5 +1,5 @@
 import type { MaintenanceLog } from '@/modules/maintenance-logs/types';
-import type { ColumnDef, VisibilityState } from '@tanstack/react-table';
+import type { ColumnDef } from '@tanstack/react-table';
 
 import { DataTableCell } from '@/core/components/data/data-table-cell';
 import { DataTableHeader } from '@/core/components/data/data-table-header';
@@ -15,6 +15,15 @@ export const maintenanceLogsTableColumns: ColumnDef<MaintenanceLog>[] = [
     header: DataTableHeader,
     cell: DataTableCell,
     enableHiding: false,
+  },
+  {
+    accessorKey: 'key',
+    meta: {
+      headerI18nKey: 'maintenanceLogs:fields.key',
+      columnType: DataTableColumnType.KEY,
+    },
+    header: DataTableHeader,
+    cell: DataTableCell,
   },
   {
     accessorKey: 'notes',
@@ -49,7 +58,3 @@ export const maintenanceLogsTableColumns: ColumnDef<MaintenanceLog>[] = [
   //   enableHiding: false,
   // },
 ];
-
-export const maintenanceLogsColumnsDefaultState: VisibilityState = {
-  deletedAt: false,
-};
