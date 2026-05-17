@@ -26,9 +26,16 @@ export const updateTargetFormSchema = targetSchema.pick({
 });
 
 export const targetsFiltersSchema = z.object({
+  branchId: z.number().optional().catch(undefined),
   search: z.string().optional().catch(''),
   includeDeleted: z.boolean().optional().catch(false),
 });
 export const targetsSearchSchema = paginationSearchSchema.extend(
   targetsFiltersSchema.shape,
 );
+
+//=======================>By Branch<========================//
+
+export const branchTargetsSearchSchema = targetsSearchSchema.omit({
+  branchId: true,
+});

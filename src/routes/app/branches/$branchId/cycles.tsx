@@ -16,7 +16,7 @@ export const Route = createFileRoute('/app/branches/$branchId/cycles')({
   loaderDeps: ({ search }): BranchCyclesSearchParams => search,
   loader: async ({ context: { queryClient }, params: { branchId }, deps }) =>
     queryClient.ensureQueryData(branchCyclesQueryOptions(branchId, deps)),
-  head: createRouteHead({ type: 'generic', titleI18nKey: 'cycles:name' }),
+  head: createRouteHead({ type: 'index', titleI18nKey: 'cycles:name' }),
   component: RouteComponent,
 });
 

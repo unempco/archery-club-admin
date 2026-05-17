@@ -1,5 +1,6 @@
 import type { Lookup } from '@/modules/shared/types';
 import type {
+  BranchTargetsSearchParams,
   CreateTargetFormData,
   Target,
   TargetsSearchParams,
@@ -42,4 +43,16 @@ export async function updateTarget(id: number, target: UpdateTargetFormData) {
 
 export async function deleteTarget(id: number) {
   return await api.deleteById(TARGETS_MODULE_NAME, id);
+}
+
+//======================>By Branch<===========================//
+
+export async function getBranchTargetsList(
+  branchId: number,
+  params: BranchTargetsSearchParams,
+) {
+  return await api.getList<Target>(
+    `/${BRANCHES_MODULE_NAME}/${branchId}/${TARGETS_MODULE_NAME}`,
+    { query: params },
+  );
 }
