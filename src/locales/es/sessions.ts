@@ -5,6 +5,7 @@ export const sessions = {
   fields: {
     duration: 'Duración (minutos)',
     group: 'Grupo',
+    branch: 'Locación',
   },
   actions: {
     viewTargets: 'Ver dianas',

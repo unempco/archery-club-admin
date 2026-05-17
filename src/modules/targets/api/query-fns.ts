@@ -2,6 +2,7 @@ import type { Lookup } from '@/modules/shared/types';
 import type {
   BranchTargetsSearchParams,
   CreateTargetFormData,
+  SessionTargetsSearchParams,
   Target,
   TargetsSearchParams,
   UpdateTargetFormData,
@@ -9,6 +10,7 @@ import type {
 
 import api from '@/core/api';
 import { BRANCHES_MODULE_NAME } from '@/modules/branches/api/query-fns';
+import { SESSIONS_MODULE_NAME } from '@/modules/sessions/api/query-fns';
 
 export const TARGETS_MODULE_NAME = 'targets';
 
@@ -53,6 +55,18 @@ export async function getBranchTargetsList(
 ) {
   return await api.getList<Target>(
     `/${BRANCHES_MODULE_NAME}/${branchId}/${TARGETS_MODULE_NAME}`,
+    { query: params },
+  );
+}
+
+//======================>By Session<===========================//
+
+export async function getSessionTargetsList(
+  sessionId: number,
+  params: SessionTargetsSearchParams,
+) {
+  return await api.getList<Target>(
+    `/${SESSIONS_MODULE_NAME}/${sessionId}/${TARGETS_MODULE_NAME}`,
     { query: params },
   );
 }

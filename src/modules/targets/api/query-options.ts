@@ -1,5 +1,6 @@
 import type {
   BranchTargetsSearchParams,
+  SessionTargetsSearchParams,
   TargetsSearchParams,
 } from '@/modules/targets/types';
 
@@ -8,6 +9,7 @@ import { queryOptions } from '@tanstack/react-query';
 import {
   getAllTargets,
   getBranchTargetsList,
+  getSessionTargetsList,
   getTargetById,
   getTargetsList,
 } from '@/modules/targets/api/query-fns';
@@ -41,4 +43,15 @@ export const branchTargetsQueryOptions = (
   queryOptions({
     queryKey: ['cycles', branchId, params],
     queryFn: () => getBranchTargetsList(branchId, params),
+  });
+
+//=======================>By Session<========================//
+
+export const sessionTargetsQueryOptions = (
+  sessionId: number,
+  params: SessionTargetsSearchParams,
+) =>
+  queryOptions({
+    queryKey: ['cycles', sessionId, params],
+    queryFn: () => getSessionTargetsList(sessionId, params),
   });

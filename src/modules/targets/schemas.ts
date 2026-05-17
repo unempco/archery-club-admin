@@ -39,3 +39,9 @@ export const targetsSearchSchema = paginationSearchSchema.extend(
 export const branchTargetsSearchSchema = targetsSearchSchema.omit({
   branchId: true,
 });
+
+//=======================>By Session<========================//
+
+export const sessionTargetsSearchSchema = targetsSearchSchema.omit({
+  branchId: true,
+});

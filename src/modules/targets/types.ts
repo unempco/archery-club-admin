@@ -3,6 +3,7 @@ import { z } from 'zod';
 import {
   branchTargetsSearchSchema,
   createTargetFormSchema,
+  sessionTargetsSearchSchema,
   targetSchema,
   targetsSearchSchema,
   updateTargetFormSchema,
@@ -18,4 +19,10 @@ export type TargetsSearchParams = z.infer<typeof targetsSearchSchema>;
 
 export type BranchTargetsSearchParams = z.infer<
   typeof branchTargetsSearchSchema
+>;
+
+//=======================>By Session<========================//
+
+export type SessionTargetsSearchParams = z.infer<
+  typeof sessionTargetsSearchSchema
 >;

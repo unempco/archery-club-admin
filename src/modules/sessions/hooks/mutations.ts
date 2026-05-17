@@ -30,7 +30,13 @@ export function useUpdateSessionMutation({
   });
 }
 
-export function useDeleteSessionMutation({ sessionId }: { sessionId: number }) {
+export function useDeleteSessionMutation({
+  sessionId,
+  onSuccess,
+}: {
+  sessionId: number;
+  onSuccess?: () => void;
+}) {
   const queryClient = useQueryClient();
   const { t } = useTranslation();
 
@@ -39,6 +45,7 @@ export function useDeleteSessionMutation({ sessionId }: { sessionId: number }) {
     mutationFn: () => deleteSession(sessionId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['sessions'] });
+      onSuccess?.();
       toast.message(t('sessions:messages.wasDeleted'));
     },
     onError: onMutationError(t),
