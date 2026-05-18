@@ -11,7 +11,7 @@ export const sessionSchema = z.object({
   groupId: z.string(),
   branchId: z.number(),
   // Form fields
-  notes: z.string().optional(),
+  notes: z.string().optional().nullable(),
   durationMinutes: z.number(),
   status: z.enum(sessionStatuses),
   targetIds: z.array(z.number()),
