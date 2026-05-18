@@ -1,18 +1,24 @@
 import type { Lookup } from '@/modules/shared/types';
 import type {
+  BranchTargetsSearchParams,
   CreateTargetFormData,
+  SessionTargetsSearchParams,
   Target,
+  TargetsLookupSearchParams,
   TargetsSearchParams,
   UpdateTargetFormData,
 } from '@/modules/targets/types';
 
 import api from '@/core/api';
 import { BRANCHES_MODULE_NAME } from '@/modules/branches/api/query-fns';
+import { SESSIONS_MODULE_NAME } from '@/modules/sessions/api/query-fns';
 
 export const TARGETS_MODULE_NAME = 'targets';
 
-export async function getAllTargets() {
-  return await api.get<Lookup[]>(`/${TARGETS_MODULE_NAME}/lookup`);
+export async function getAllTargets(params: TargetsLookupSearchParams) {
+  return await api.get<Lookup[]>(`/${TARGETS_MODULE_NAME}/lookup`, {
+    query: params,
+  });
 }
 
 export async function getTargetsList(params: TargetsSearchParams) {
@@ -42,4 +48,28 @@ export async function updateTarget(id: number, target: UpdateTargetFormData) {
 
 export async function deleteTarget(id: number) {
   return await api.deleteById(TARGETS_MODULE_NAME, id);
+}
+
+//======================>By Branch<===========================//
+
+export async function getBranchTargetsList(
+  branchId: number,
+  params: BranchTargetsSearchParams,
+) {
+  return await api.getList<Target>(
+    `/${BRANCHES_MODULE_NAME}/${branchId}/${TARGETS_MODULE_NAME}`,
+    { query: params },
+  );
+}
+
+//======================>By Session<===========================//
+
+export async function getSessionTargetsList(
+  sessionId: number,
+  params: SessionTargetsSearchParams,
+) {
+  return await api.getList<Target>(
+    `/${SESSIONS_MODULE_NAME}/${sessionId}/${TARGETS_MODULE_NAME}`,
+    { query: params },
+  );
 }

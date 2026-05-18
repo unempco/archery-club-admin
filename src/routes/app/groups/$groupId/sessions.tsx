@@ -36,7 +36,7 @@ function RouteComponent() {
         items={data.items}
         pagination={data.meta}
         dataTableColumnsSettings={sessionsTableColumns}
-        dataTableDefaultVisibleColumns={{ groupId: false }}
+        dataTableDefaultVisibleColumns={{ groupId: false, branchId: false }}
         dataFiltersSlot={<DataSearch />}
       />
     </>

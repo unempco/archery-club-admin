@@ -28,7 +28,7 @@ export const sessionsLookupQueryOptions = () => {
 
 export const sessionQueryOptions = (id: number) =>
   queryOptions({
-    queryKey: ['sessionById', id],
+    queryKey: ['sessions', id],
     queryFn: () => getSessionById(id),
   });
 

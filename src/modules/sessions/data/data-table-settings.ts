@@ -54,6 +54,15 @@ export const sessionsTableColumns: ColumnDef<Session>[] = [
     cell: DataTableCell,
   },
   {
+    accessorKey: 'branchId',
+    meta: {
+      headerI18nKey: 'sessions:fields.branch',
+      columnType: DataTableColumnType.NUMBER,
+    },
+    header: DataTableHeader,
+    cell: DataTableCell,
+  },
+  {
     accessorKey: 'scheduledAt',
     meta: {
       headerI18nKey: 'sessions:fields.scheduledAt',

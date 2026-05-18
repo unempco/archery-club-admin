@@ -5,6 +5,7 @@ import {
   DotsThreeIcon,
   KanbanIcon,
   PencilIcon,
+  TargetIcon,
   TrashIcon,
 } from '@phosphor-icons/react';
 import { useNavigate } from '@tanstack/react-router';
@@ -60,6 +61,26 @@ export function BranchActions({ branch }: BranchActionsProps) {
               <KanbanIcon />
               {t('branches:actions.viewCycles')}
             </DropdownMenuItem>
+          </PermissionGuard>
+          <PermissionGuard permissions={ApiPermissions.Targets.READ}>
+            <DropdownMenuItem
+              onClick={() =>
+                navigate({
+                  to: '/app/branches/$branchId/targets',
+                  params: { branchId: String(branch.id) },
+                })
+              }
+            >
+              <TargetIcon />
+              {t('branches:actions.viewTargets')}
+            </DropdownMenuItem>
+          </PermissionGuard>
+          <PermissionGuard
+            permissions={[
+              ApiPermissions.Cycles.READ,
+              ApiPermissions.Targets.READ,
+            ]}
+          >
             <DropdownMenuSeparator />
           </PermissionGuard>
           <PermissionGuard permissions={ApiPermissions.Branches.UPDATE}>

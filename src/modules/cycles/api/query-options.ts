@@ -28,7 +28,7 @@ export const cyclesLookupQueryOptions = () => {
 
 export const cycleQueryOptions = (id: number) =>
   queryOptions({
-    queryKey: ['cycleById', id],
+    queryKey: ['cycles', id],
     queryFn: () => getCycleById(id),
   });
 

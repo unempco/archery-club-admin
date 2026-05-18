@@ -1,4 +1,4 @@
-import type { FormField } from '@/core/types/components';
+import type { FormField, FormOption } from '@/core/types/components';
 import type { FieldValues } from 'react-hook-form';
 
 import { Controller } from 'react-hook-form';
@@ -34,7 +34,7 @@ export function FormSelect<T extends FieldValues>({
             </SelectTrigger>
             <SelectContent>
               {options.map((opt) => (
-                <SelectItem key={opt.value} value={opt.value}>
+                <SelectItem key={opt.value} value={String(opt.value)}>
                   {opt.label}
                 </SelectItem>
               ))}
@@ -48,11 +48,5 @@ export function FormSelect<T extends FieldValues>({
 }
 
 export type FormSelectProps<T extends FieldValues> = FormField<T> & {
-  label: string;
-  options: SelectOption[];
-};
-
-export type SelectOption = {
-  label: string;
-  value: string;
+  options: FormOption[];
 };
