@@ -34,7 +34,7 @@ export function FormSelect<T extends FieldValues>({
             </SelectTrigger>
             <SelectContent>
               {options.map((opt) => (
-                <SelectItem key={opt.value} value={opt.value}>
+                <SelectItem key={opt.value} value={String(opt.value)}>
                   {opt.label}
                 </SelectItem>
               ))}
