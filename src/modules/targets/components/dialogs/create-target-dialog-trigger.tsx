@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useParams } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -15,6 +16,8 @@ export function CreateTargetDialogTrigger({
   children,
 }: CreateTargetDialogProps) {
   const { t } = useTranslation();
+  const { branchId } = useParams({ strict: false });
+
   const [open, onOpenChange] = useState(false);
 
   const mutation = useCreateTargetMutation({
@@ -32,6 +35,7 @@ export function CreateTargetDialogTrigger({
           onSubmit={(data) => mutation.mutate(data)}
           onCancel={() => onOpenChange(false)}
           isLoading={mutation.isPending}
+          defaultValues={{ branchId }}
         />
       </DialogContent>
     </Dialog>

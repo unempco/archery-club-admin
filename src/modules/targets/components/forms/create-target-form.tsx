@@ -58,7 +58,9 @@ export function CreateTargetForm({
           label={t('targets:fields.branch')}
           placeholder={t('targets:forms.placeholders.branch')}
           options={branchesOptions}
-          disabled={isSubmitting || !branchesSuccess}
+          disabled={
+            isSubmitting || !branchesSuccess || !!defaultValues?.branchId
+          }
           required
         />
 
