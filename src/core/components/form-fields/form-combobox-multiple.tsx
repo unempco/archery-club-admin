@@ -62,7 +62,7 @@ export function FormComboboxMultiple<T extends FieldValues>({
             <ComboboxChips
               ref={anchor}
               aria-disabled={disabled}
-              className="w-full max-w-xs"
+              className="w-full"
             >
               <ComboboxValue>
                 {(values) => (
