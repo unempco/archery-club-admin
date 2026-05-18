@@ -53,7 +53,7 @@ export function FormComboboxMultiple<T extends FieldValues>({
           <Combobox<FormOption, true>
             multiple
             items={options}
-            itemToStringValue={(item) => item.value}
+            itemToStringValue={(item) => String(item.value)}
             itemToStringLabel={(item) => item.label}
             value={field.value}
             onValueChange={field.onChange}
@@ -65,15 +65,15 @@ export function FormComboboxMultiple<T extends FieldValues>({
               className="w-full"
             >
               <ComboboxValue>
-                {(values) => (
+                {!!options.length && (
                   <>
-                    {values.map((value: string) => (
-                      <ComboboxChip key={value}>
+                    {field.value.map((value: unknown) => (
+                      <ComboboxChip key={String(value)}>
                         {options.find((opt) => opt.value === value)?.label}
                       </ComboboxChip>
                     ))}
                     <ComboboxChipsInput
-                      placeholder={!values.length ? placeholder : ''}
+                      placeholder={!field.value.length ? placeholder : ''}
                     />
                   </>
                 )}

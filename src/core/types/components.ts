@@ -11,6 +11,6 @@ export type FormField<T extends FieldValues> = {
 
 export type FormOption = {
   label: string;
-  value: string;
+  value: string | number;
   description?: string;
 };
