@@ -44,7 +44,7 @@ export const branchTargetsQueryOptions = (
   params: BranchTargetsSearchParams,
 ) =>
   queryOptions({
-    queryKey: ['cycles', branchId, params],
+    queryKey: ['targets', branchId, params],
     queryFn: () => getBranchTargetsList(branchId, params),
   });
 
@@ -55,6 +55,6 @@ export const sessionTargetsQueryOptions = (
   params: SessionTargetsSearchParams,
 ) =>
   queryOptions({
-    queryKey: ['cycles', sessionId, params],
+    queryKey: ['targets', sessionId, params],
     queryFn: () => getSessionTargetsList(sessionId, params),
   });
