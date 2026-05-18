@@ -1,13 +1,14 @@
 import type { Session } from '@/modules/sessions/types';
 
 import { useState } from 'react';
-import { PencilIcon, TrashIcon } from '@phosphor-icons/react';
+import { PencilIcon, RowsPlusBottomIcon } from '@phosphor-icons/react';
 import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { DeleteConfirmationDialog } from '@/core/components/delete-confirmation-dialog';
 import { Button } from '@/core/components/ui/button';
 import { PermissionGuard } from '@/modules/auth/components/permissions-guard';
+import { AssignSessionTargetsDialog } from '@/modules/sessions/components/dialogs/assign-session-targets-dialog';
 import { UpdateSessionDialog } from '@/modules/sessions/components/dialogs/update-session-dialog';
 import { useDeleteSessionMutation } from '@/modules/sessions/hooks/mutations';
 import { PageHeader } from '@/modules/shared/components/page-header';
@@ -18,6 +19,7 @@ export function SessionHeader({ session }: SessionHeaderProps) {
   const navigate = useNavigate();
 
   const [editOpen, setEditOpen] = useState(false);
+  const [assignOpen, setAssignOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   const deleteMutation = useDeleteSessionMutation({
@@ -39,9 +41,10 @@ export function SessionHeader({ session }: SessionHeaderProps) {
             {t('actions.edit')}
           </Button>
         </PermissionGuard>
-        <PermissionGuard permissions={ApiPermissions.Sessions.DELETE}>
-          <Button variant="destructive" onClick={() => setConfirmOpen(true)}>
-            <TrashIcon />
+        <PermissionGuard permissions={ApiPermissions.Sessions.UPDATE}>
+          <Button variant="secondary" onClick={() => setAssignOpen(true)}>
+            <RowsPlusBottomIcon />
+            {t('sessions:actions.assignTargets')}
           </Button>
         </PermissionGuard>
       </PageHeader>
@@ -51,7 +54,11 @@ export function SessionHeader({ session }: SessionHeaderProps) {
         open={editOpen}
         onOpenChange={setEditOpen}
       />
-
+      <AssignSessionTargetsDialog
+        session={session}
+        open={assignOpen}
+        onOpenChange={setAssignOpen}
+      />
       <DeleteConfirmationDialog
         open={confirmOpen}
         onOpenChange={setConfirmOpen}

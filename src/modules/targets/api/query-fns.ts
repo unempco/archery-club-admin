@@ -4,6 +4,7 @@ import type {
   CreateTargetFormData,
   SessionTargetsSearchParams,
   Target,
+  TargetsLookupSearchParams,
   TargetsSearchParams,
   UpdateTargetFormData,
 } from '@/modules/targets/types';
@@ -14,8 +15,10 @@ import { SESSIONS_MODULE_NAME } from '@/modules/sessions/api/query-fns';
 
 export const TARGETS_MODULE_NAME = 'targets';
 
-export async function getAllTargets() {
-  return await api.get<Lookup[]>(`/${TARGETS_MODULE_NAME}/lookup`);
+export async function getAllTargets(params: TargetsLookupSearchParams) {
+  return await api.get<Lookup[]>(`/${TARGETS_MODULE_NAME}/lookup`, {
+    query: params,
+  });
 }
 
 export async function getTargetsList(params: TargetsSearchParams) {

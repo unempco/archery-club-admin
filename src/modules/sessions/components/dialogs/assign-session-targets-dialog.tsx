@@ -8,17 +8,17 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/core/components/ui/dialog';
-import { UpdateSessionForm } from '@/modules/sessions/components/forms/update-session-form';
-import { useUpdateSessionMutation } from '@/modules/sessions/hooks/mutations';
+import { AssignSessionTargetsForm } from '@/modules/sessions/components/forms/assign-session-targets-form';
+import { useSessionTargetsMutation } from '@/modules/sessions/hooks/mutations';
 
-export function UpdateSessionDialog({
+export function AssignSessionTargetsDialog({
   session,
   open,
   onOpenChange,
 }: UpdateSessionDialogProps) {
   const { t } = useTranslation();
 
-  const mutation = useUpdateSessionMutation({
+  const mutation = useSessionTargetsMutation({
     sessionId: session.id,
     onSuccess: () => onOpenChange(false),
   });
@@ -27,9 +27,10 @@ export function UpdateSessionDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>{t('sessions:dialogs.update.title')}</DialogTitle>
+          <DialogTitle>{t('sessions:dialogs.assignTargets.title')}</DialogTitle>
         </DialogHeader>
-        <UpdateSessionForm
+        <AssignSessionTargetsForm
+          branchId={session.branchId}
           defaultValues={session}
           onSubmit={(data) => mutation.mutate(data)}
           onCancel={() => onOpenChange(false)}

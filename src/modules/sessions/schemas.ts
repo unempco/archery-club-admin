@@ -9,7 +9,7 @@ export const sessionSchema = z.object({
   key: z.string(),
   scheduledAt: z.string(),
   groupId: z.string(),
-  branchId: z.string(),
+  branchId: z.number(),
   // Form fields
   notes: z.string().optional(),
   durationMinutes: z.number(),
@@ -21,6 +21,7 @@ export const updateSessionFormSchema = sessionSchema.pick({
   status: true,
   notes: true,
 });
+export const assignTargetsFormSchema = sessionSchema.pick({ targetIds: true });
 
 export const sessionsFiltersSchema = z.object({
   groupId: z.string().optional().catch(''),

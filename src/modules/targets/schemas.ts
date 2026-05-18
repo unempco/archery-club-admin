@@ -33,6 +33,9 @@ export const targetsFiltersSchema = z.object({
 export const targetsSearchSchema = paginationSearchSchema.extend(
   targetsFiltersSchema.shape,
 );
+export const targetsLookupSearchSchema = targetsSearchSchema.pick({
+  branchId: true,
+});
 
 //=======================>By Branch<========================//
 

@@ -1,6 +1,7 @@
 import type {
   BranchTargetsSearchParams,
   SessionTargetsSearchParams,
+  TargetsLookupSearchParams,
   TargetsSearchParams,
 } from '@/modules/targets/types';
 
@@ -20,10 +21,12 @@ export const targetsIndexQueryOptions = (params: TargetsSearchParams) =>
     queryFn: () => getTargetsList(params),
   });
 
-export const targetsLookupQueryOptions = () => {
+export const targetsLookupQueryOptions = (
+  params: TargetsLookupSearchParams,
+) => {
   return queryOptions({
-    queryKey: ['targets', 'lookup'],
-    queryFn: () => getAllTargets(),
+    queryKey: ['targets', 'lookup', params],
+    queryFn: () => getAllTargets(params),
     staleTime: 1000 * 60, // 1 minute to avoid reload on multiple forms in a short time
   });
 };

@@ -1,4 +1,5 @@
 import type {
+  AssignTargetsFormData,
   GroupSessionsSearchParams,
   Session,
   SessionsSearchParams,
@@ -32,6 +33,13 @@ export async function updateSession(
   return await api.patchById<Session>(SESSIONS_MODULE_NAME, id, {
     body: session,
   });
+}
+
+export async function assignSessionTargets(
+  id: number,
+  data: AssignTargetsFormData,
+) {
+  return await api.put(`${SESSIONS_MODULE_NAME}/${id}/targets`, { body: data });
 }
 
 export async function deleteSession(id: number) {

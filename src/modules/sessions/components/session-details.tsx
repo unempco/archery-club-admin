@@ -51,7 +51,7 @@ export function SessionDetails({ session, className }: SessionDetailsProps) {
       <DetailFieldItem
         icon={BuildingOfficeIcon}
         label={t('sessions:fields.branch')}
-        value={t(session.branchId)}
+        value={session.branchId}
       />
     </div>
   );
