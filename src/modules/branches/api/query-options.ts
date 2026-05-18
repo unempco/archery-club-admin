@@ -24,6 +24,6 @@ export const branchesLookupQueryOptions = () => {
 
 export const branchQueryOptions = (id: number) =>
   queryOptions({
-    queryKey: ['branchById', id],
+    queryKey: ['branches', id],
     queryFn: () => getBranchById(id),
   });

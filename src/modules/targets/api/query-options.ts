@@ -33,7 +33,7 @@ export const targetsLookupQueryOptions = (
 
 export const targetQueryOptions = (itemId: number) =>
   queryOptions({
-    queryKey: ['targetById', itemId],
+    queryKey: ['targets', itemId],
     queryFn: () => getTargetById(itemId),
   });
 

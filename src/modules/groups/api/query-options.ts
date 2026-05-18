@@ -19,7 +19,7 @@ export const groupsIndexQueryOptions = (params: GroupsSearchParams) =>
 
 export const groupQueryOptions = (id: number) =>
   queryOptions({
-    queryKey: ['groupById', id],
+    queryKey: ['groups', id],
     queryFn: () => getGroupById(id),
   });
 
