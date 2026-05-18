@@ -31,7 +31,7 @@ function RouteComponent() {
 
   return (
     <>
-      <TargetsHeader asSubtitle />
+      <TargetsHeader asSubtitle enableCreate={false} />
       <DataView
         preferencesNamespace="sessions.targets"
         items={data.items}

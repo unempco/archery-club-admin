@@ -7,7 +7,10 @@ import { PageHeader } from '@/modules/shared/components/page-header';
 import { ApiPermissions } from '@/modules/shared/constants/permissions';
 import { CreateTargetDialogTrigger } from '@/modules/targets/components/dialogs/create-target-dialog-trigger';
 
-export function TargetsHeader({ asSubtitle }: TargetsHeaderProps) {
+export function TargetsHeader({
+  asSubtitle,
+  enableCreate = true,
+}: TargetsHeaderProps) {
   const { t } = useTranslation();
 
   return (
@@ -15,18 +18,21 @@ export function TargetsHeader({ asSubtitle }: TargetsHeaderProps) {
       title={t('targets:name')}
       titleVariant={asSubtitle ? 'h2' : 'h1'}
     >
-      <PermissionGuard permissions={ApiPermissions.Targets.CREATE}>
-        <CreateTargetDialogTrigger>
-          <Button>
-            <PlusIcon />
-            {t('targets:actions.addNew')}
-          </Button>
-        </CreateTargetDialogTrigger>
-      </PermissionGuard>
+      {enableCreate && (
+        <PermissionGuard permissions={ApiPermissions.Targets.CREATE}>
+          <CreateTargetDialogTrigger>
+            <Button>
+              <PlusIcon />
+              {t('targets:actions.addNew')}
+            </Button>
+          </CreateTargetDialogTrigger>
+        </PermissionGuard>
+      )}
     </PageHeader>
   );
 }
 
 export type TargetsHeaderProps = {
+  enableCreate?: boolean;
   asSubtitle?: boolean;
 };
