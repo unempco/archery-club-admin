@@ -30,6 +30,7 @@ export function useUpdateSessionMutation({
     mutationFn: (data: UpdateSessionFormData) => updateSession(sessionId, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['sessions'] });
+      queryClient.invalidateQueries({ queryKey: ['targets'] });
       onSuccess();
       toast.success(t('sessions:messages.wasUpdated'));
     },
@@ -54,6 +55,7 @@ export function useSessionTargetsMutation({
       assignSessionTargets(sessionId, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['sessions'] });
+      queryClient.invalidateQueries({ queryKey: ['targets'] });
       onSuccess();
       toast.success(t('sessions:messages.wasUpdated'));
     },
