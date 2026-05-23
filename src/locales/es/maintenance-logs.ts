@@ -11,6 +11,9 @@ export const maintenanceLogs = {
     create: {
       title: 'Crear nuevo registro de mantenimiento',
     },
+    update: {
+      title: 'Actualizar registro de mantenimiento',
+    },
   },
   messages: {},
   filters: {},

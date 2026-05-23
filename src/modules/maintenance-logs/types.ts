@@ -6,12 +6,16 @@ import {
   createMaintenanceLogFormSchema,
   maintenanceLogsSearchSchema,
   targetMaintenanceLogsSearchSchema,
+  updateMaintenanceLogFormSchema,
 } from '@/modules/maintenance-logs/schemas';
 
 export type MaintenanceLog = z.infer<typeof maintenanceLogSchema>;
 
 export type CreateMaintenanceLogFormData = z.infer<
   typeof createMaintenanceLogFormSchema
+>;
+export type UpdateMaintenanceLogFormData = z.infer<
+  typeof updateMaintenanceLogFormSchema
 >;
 
 export type MaintenanceLogsSearchParams = z.infer<

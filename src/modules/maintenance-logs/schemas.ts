@@ -17,6 +17,10 @@ export const createMaintenanceLogFormSchema = maintenanceLogSchema.pick({
   performedAt: true,
   notes: true,
 });
+export const updateMaintenanceLogFormSchema = maintenanceLogSchema.pick({
+  performedAt: true,
+  notes: true,
+});
 
 export const maintenanceLogsFiltersSchema = z.object({
   search: z.string().optional().catch(''),
@@ -28,6 +32,7 @@ export const maintenanceLogsSearchSchema = paginationSearchSchema.extend(
 );
 
 //=============================>By Target<========================//
+
 export const targetMaintenanceLogsSearchSchema =
   maintenanceLogsSearchSchema.omit({
     targetId: true,

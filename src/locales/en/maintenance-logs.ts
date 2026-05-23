@@ -8,8 +8,11 @@ export const maintenanceLogs = {
   },
   actions: {},
   dialogs: {
-    crate: {
+    create: {
       title: 'Add New Maintenance Log',
+    },
+    update: {
+      title: 'Update Maintenance Log',
     },
   },
   messages: {},
