@@ -1,4 +1,7 @@
-import type { BranchesSearchParams } from '@/modules/branches/types';
+import type {
+  BranchesLookupSearchParams,
+  BranchesSearchParams,
+} from '@/modules/branches/types';
 
 import { queryOptions } from '@tanstack/react-query';
 
@@ -14,10 +17,12 @@ export const branchesIndexQueryOptions = (params: BranchesSearchParams) =>
     queryFn: () => getBranchesList(params),
   });
 
-export const branchesLookupQueryOptions = () => {
+export const branchesLookupQueryOptions = (
+  params: BranchesLookupSearchParams = {},
+) => {
   return queryOptions({
     queryKey: ['branches', 'lookup'],
-    queryFn: () => getAllBranches(),
+    queryFn: () => getAllBranches(params),
     staleTime: 1000 * 60, // 1 minute to avoid reload on multiple forms in a short time
   });
 };

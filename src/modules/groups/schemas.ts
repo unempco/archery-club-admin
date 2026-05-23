@@ -6,10 +6,10 @@ import { groupStatuses } from '@/modules/groups/constants';
 export const groupSchema = z.object({
   // Server-generated fields
   id: z.number(),
-  isDeleted: z.boolean(),
-  deletedAt: z.string().nullable(),
   createdAt: z.string(),
   status: z.enum(groupStatuses),
+  deletedAt: z.string().nullable(),
+  isDeleted: z.boolean(),
   // Form fields
   name: z.string().min(1, 'Name is required'),
   cycleId: z.coerce.number('Cycle is required'),
@@ -34,6 +34,7 @@ export const updateGroupFormSchema = groupSchema.pick({
 });
 
 export const groupsFiltersSchema = z.object({
+  status: z.enum(groupStatuses).optional().catch(undefined),
   cycleId: z.string().optional().catch(''),
   search: z.string().optional().catch(''),
   includeDeleted: z.boolean().optional().catch(false),
@@ -41,6 +42,11 @@ export const groupsFiltersSchema = z.object({
 export const groupsSearchSchema = paginationSearchSchema.extend(
   groupsFiltersSchema.shape,
 );
+export const groupsLookupSearchSchema = groupsFiltersSchema.pick({
+  status: true,
+  cycleId: true,
+  includeDeleted: true,
+});
 
 //====================>ByCycle<===================//
 

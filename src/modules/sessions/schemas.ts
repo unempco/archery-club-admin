@@ -10,6 +10,8 @@ export const sessionSchema = z.object({
   scheduledAt: z.string(),
   groupId: z.string(),
   branchId: z.number(),
+  deletedAt: z.string().nullable(),
+  isDeleted: z.boolean(),
   // Form fields
   notes: z.string().optional().nullable(),
   durationMinutes: z.number(),
@@ -24,6 +26,7 @@ export const updateSessionFormSchema = sessionSchema.pick({
 export const assignTargetsFormSchema = sessionSchema.pick({ targetIds: true });
 
 export const sessionsFiltersSchema = z.object({
+  status: z.enum(sessionStatuses).optional().catch(undefined),
   groupId: z.string().optional().catch(''),
   includeDeleted: z.boolean().optional().catch(false),
 });

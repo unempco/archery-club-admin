@@ -19,7 +19,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/core/components/ui/dropdown-menu';
-import { PermissionGuard } from '@/modules/auth/components/permissions-guard';
+import { useAuth } from '@/modules/auth/hooks/use-auth';
 import { UpdateGroupDialog } from '@/modules/groups/components/dialogs/update-group-dialog';
 import { useDeleteGroupMutation } from '@/modules/groups/hooks/mutations';
 import { ApiPermissions } from '@/modules/shared/constants/permissions';
@@ -27,72 +27,80 @@ import { ApiPermissions } from '@/modules/shared/constants/permissions';
 export function GroupActions({ group }: GroupActionsProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { hasPermissions } = useAuth();
 
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
 
   const deleteMutation = useDeleteGroupMutation({ groupId: group.id });
 
-  return (
-    <PermissionGuard
-      permissions={[ApiPermissions.Groups.UPDATE, ApiPermissions.Groups.DELETE]}
-    >
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon">
-            <DotsThreeIcon weight="bold" className="size-6" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <PermissionGuard permissions={ApiPermissions.Sessions.READ}>
-            <DropdownMenuItem
-              onClick={() =>
-                navigate({
-                  to: '/app/groups/$groupId/sessions',
-                  params: {
-                    groupId: String(group.id),
-                  },
-                })
-              }
-            >
-              <ClockCountdownIcon />
-              {t('groups:actions.viewSessions')}
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-          </PermissionGuard>
-          <PermissionGuard permissions={ApiPermissions.Groups.UPDATE}>
-            <DropdownMenuItem onClick={() => setEditOpen(true)}>
-              <PencilIcon />
-              {t('actions.edit')}
-            </DropdownMenuItem>
-          </PermissionGuard>
-          <PermissionGuard permissions={ApiPermissions.Groups.DELETE}>
-            <DropdownMenuItem
-              variant="destructive"
-              onClick={() => setConfirmOpen(true)}
-            >
-              <TrashIcon />
-              {t('actions.delete')}
-            </DropdownMenuItem>
-          </PermissionGuard>
-        </DropdownMenuContent>
-      </DropdownMenu>
+  const canViewSessions = hasPermissions(ApiPermissions.Sessions.READ);
+  const canUpdate = hasPermissions(ApiPermissions.Groups.UPDATE);
+  const canDelete = hasPermissions(ApiPermissions.Groups.DELETE);
 
-      <UpdateGroupDialog
-        group={group}
-        open={editOpen}
-        onOpenChange={setEditOpen}
-      />
+  if (canViewSessions || canUpdate || canDelete)
+    return (
+      <>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon">
+              <DotsThreeIcon weight="bold" className="size-6" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            {canViewSessions && (
+              <DropdownMenuItem
+                onClick={() =>
+                  navigate({
+                    to: '/app/groups/$groupId/sessions',
+                    params: {
+                      groupId: String(group.id),
+                    },
+                  })
+                }
+              >
+                <ClockCountdownIcon />
+                {t('groups:actions.viewSessions')}
+              </DropdownMenuItem>
+            )}
 
-      <DeleteConfirmationDialog
-        open={confirmOpen}
-        onOpenChange={setConfirmOpen}
-        onConfirm={() => deleteMutation.mutate()}
-        isPending={deleteMutation.isPending}
-        name={group.name}
-      />
-    </PermissionGuard>
-  );
+            {canViewSessions && [canUpdate, canDelete].some(Boolean) && (
+              <DropdownMenuSeparator />
+            )}
+
+            {canUpdate && (
+              <DropdownMenuItem onClick={() => setEditOpen(true)}>
+                <PencilIcon />
+                {t('actions.edit')}
+              </DropdownMenuItem>
+            )}
+            {canDelete && (
+              <DropdownMenuItem
+                variant="destructive"
+                onClick={() => setConfirmOpen(true)}
+              >
+                <TrashIcon />
+                {t('actions.delete')}
+              </DropdownMenuItem>
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <UpdateGroupDialog
+          group={group}
+          open={editOpen}
+          onOpenChange={setEditOpen}
+        />
+
+        <DeleteConfirmationDialog
+          open={confirmOpen}
+          onOpenChange={setConfirmOpen}
+          onConfirm={() => deleteMutation.mutate()}
+          isPending={deleteMutation.isPending}
+          name={group.name}
+        />
+      </>
+    );
 }
 
 export type GroupActionsProps = { group: Group };

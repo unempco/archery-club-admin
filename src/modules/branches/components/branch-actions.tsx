@@ -20,7 +20,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/core/components/ui/dropdown-menu';
-import { PermissionGuard } from '@/modules/auth/components/permissions-guard';
+import { useAuth } from '@/modules/auth/hooks/use-auth';
 import { UpdateBranchDialog } from '@/modules/branches/components/dialogs/update-branch-dialog';
 import { useDeleteBranchMutation } from '@/modules/branches/hooks/mutations';
 import { ApiPermissions } from '@/modules/shared/constants/permissions';
@@ -28,94 +28,89 @@ import { ApiPermissions } from '@/modules/shared/constants/permissions';
 export function BranchActions({ branch }: BranchActionsProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { hasPermissions } = useAuth();
 
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
 
   const deleteMutation = useDeleteBranchMutation({ branchId: branch.id });
 
-  return (
-    <PermissionGuard
-      permissions={[
-        ApiPermissions.Branches.UPDATE,
-        ApiPermissions.Branches.DELETE,
-        ApiPermissions.Cycles.READ,
-      ]}
-    >
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon">
-            <DotsThreeIcon weight="bold" className="size-6" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <PermissionGuard permissions={ApiPermissions.Cycles.READ}>
-            <DropdownMenuItem
-              onClick={() =>
-                navigate({
-                  to: '/app/branches/$branchId/cycles',
-                  params: { branchId: String(branch.id) },
-                })
-              }
-            >
-              <KanbanIcon />
-              {t('branches:actions.viewCycles')}
-            </DropdownMenuItem>
-          </PermissionGuard>
-          <PermissionGuard permissions={ApiPermissions.Targets.READ}>
-            <DropdownMenuItem
-              onClick={() =>
-                navigate({
-                  to: '/app/branches/$branchId/targets',
-                  params: { branchId: String(branch.id) },
-                })
-              }
-            >
-              <TargetIcon />
-              {t('branches:actions.viewTargets')}
-            </DropdownMenuItem>
-          </PermissionGuard>
-          <PermissionGuard
-            permissions={[
-              ApiPermissions.Cycles.READ,
-              ApiPermissions.Targets.READ,
-            ]}
-          >
-            <DropdownMenuSeparator />
-          </PermissionGuard>
-          <PermissionGuard permissions={ApiPermissions.Branches.UPDATE}>
-            <DropdownMenuItem onClick={() => setEditOpen(true)}>
-              <PencilIcon />
-              {t('actions.edit')}
-            </DropdownMenuItem>
-          </PermissionGuard>
-          <PermissionGuard permissions={ApiPermissions.Branches.DELETE}>
-            <DropdownMenuItem
-              variant="destructive"
-              onClick={() => setConfirmOpen(true)}
-            >
-              <TrashIcon />
-              {t('actions.delete')}
-            </DropdownMenuItem>
-          </PermissionGuard>
-        </DropdownMenuContent>
-      </DropdownMenu>
+  const canViewCycles = hasPermissions([ApiPermissions.Cycles.READ]);
+  const canViewTargets = hasPermissions(ApiPermissions.Targets.READ);
+  const canUpdate = hasPermissions(ApiPermissions.Branches.UPDATE);
+  const canDelete = hasPermissions(ApiPermissions.Branches.DELETE);
 
-      <UpdateBranchDialog
-        branch={branch}
-        open={editOpen}
-        onOpenChange={setEditOpen}
-      />
+  if (canViewCycles || canViewTargets || canUpdate || canDelete)
+    return (
+      <>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon">
+              <DotsThreeIcon weight="bold" className="size-6" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            {canViewCycles && (
+              <DropdownMenuItem
+                onClick={() =>
+                  navigate({
+                    to: '/app/branches/$branchId/cycles',
+                    params: { branchId: String(branch.id) },
+                  })
+                }
+              >
+                <KanbanIcon />
+                {t('branches:actions.viewCycles')}
+              </DropdownMenuItem>
+            )}
+            {canViewTargets && (
+              <DropdownMenuItem
+                onClick={() =>
+                  navigate({
+                    to: '/app/branches/$branchId/targets',
+                    params: { branchId: String(branch.id) },
+                  })
+                }
+              >
+                <TargetIcon />
+                {t('branches:actions.viewTargets')}
+              </DropdownMenuItem>
+            )}
+            {[canViewTargets, canViewCycles].some(Boolean) &&
+              [canUpdate, canDelete].some(Boolean) && <DropdownMenuSeparator />}
+            {canUpdate && (
+              <DropdownMenuItem onClick={() => setEditOpen(true)}>
+                <PencilIcon />
+                {t('actions.edit')}
+              </DropdownMenuItem>
+            )}
+            {canDelete && (
+              <DropdownMenuItem
+                variant="destructive"
+                onClick={() => setConfirmOpen(true)}
+              >
+                <TrashIcon />
+                {t('actions.delete')}
+              </DropdownMenuItem>
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
 
-      <DeleteConfirmationDialog
-        open={confirmOpen}
-        onOpenChange={setConfirmOpen}
-        onConfirm={() => deleteMutation.mutate()}
-        isPending={deleteMutation.isPending}
-        name={branch.name}
-      />
-    </PermissionGuard>
-  );
+        <UpdateBranchDialog
+          branch={branch}
+          open={editOpen}
+          onOpenChange={setEditOpen}
+        />
+
+        <DeleteConfirmationDialog
+          open={confirmOpen}
+          onOpenChange={setConfirmOpen}
+          onConfirm={() => deleteMutation.mutate()}
+          isPending={deleteMutation.isPending}
+          name={branch.name}
+        />
+      </>
+    );
 }
 
 export type BranchActionsProps = { branch: Branch };

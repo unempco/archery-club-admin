@@ -1,7 +1,15 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Outlet } from '@tanstack/react-router';
 
-import { UnderConstruction } from '@/layout/components/under-construction';
+import { createRouteHead } from '@/layout/lib/create-route-head';
 
 export const Route = createFileRoute('/app/maintenance-logs')({
-  component: UnderConstruction,
+  head: createRouteHead({
+    type: 'index',
+    titleI18nKey: 'maintenanceLogs:name',
+  }),
+  component: RouteComponent,
 });
+
+function RouteComponent() {
+  return <Outlet />;
+}

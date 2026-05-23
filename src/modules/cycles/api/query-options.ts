@@ -1,5 +1,6 @@
 import type {
   BranchCyclesSearchParams,
+  CyclesLookupSearchParams,
   CyclesSearchParams,
 } from '@/modules/cycles/types';
 
@@ -18,10 +19,12 @@ export const cyclesIndexQueryOptions = (params: CyclesSearchParams) =>
     queryFn: () => getCyclesList(params),
   });
 
-export const cyclesLookupQueryOptions = () => {
+export const cyclesLookupQueryOptions = (
+  params: CyclesLookupSearchParams = {},
+) => {
   return queryOptions({
     queryKey: ['cycles', 'lookup'],
-    queryFn: () => getAllCycles(),
+    queryFn: () => getAllCycles(params),
     staleTime: 1000 * 60, // 1 minute to avoid reload on multiple forms in a short time
   });
 };

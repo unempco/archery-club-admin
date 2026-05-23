@@ -6,6 +6,8 @@ export const maintenanceLogSchema = z.object({
   // Server-generated fields
   id: z.number(),
   key: z.string(),
+  deletedAt: z.string().nullable(),
+  isDeleted: z.boolean(),
   // Form fields
   targetId: z.coerce.number('Target is required'),
   performedAt: z.coerce.date(),
@@ -17,8 +19,23 @@ export const createMaintenanceLogFormSchema = maintenanceLogSchema.pick({
   performedAt: true,
   notes: true,
 });
+export const updateMaintenanceLogFormSchema = maintenanceLogSchema.pick({
+  performedAt: true,
+  notes: true,
+});
 
-export const maintenanceLogsFiltersSchema = z.object({});
+export const maintenanceLogsFiltersSchema = z.object({
+  search: z.string().optional().catch(''),
+  targetId: z.number().optional().catch(undefined),
+  includeDeleted: z.boolean().optional().catch(false),
+});
 export const maintenanceLogsSearchSchema = paginationSearchSchema.extend(
   maintenanceLogsFiltersSchema.shape,
 );
+
+//=============================>By Target<========================//
+
+export const targetMaintenanceLogsSearchSchema =
+  maintenanceLogsSearchSchema.omit({
+    targetId: true,
+  });

@@ -22,7 +22,7 @@ export const targetsIndexQueryOptions = (params: TargetsSearchParams) =>
   });
 
 export const targetsLookupQueryOptions = (
-  params: TargetsLookupSearchParams,
+  params: TargetsLookupSearchParams = {},
 ) => {
   return queryOptions({
     queryKey: ['targets', 'lookup', params],

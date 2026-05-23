@@ -19,7 +19,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/core/components/ui/dropdown-menu';
-import { PermissionGuard } from '@/modules/auth/components/permissions-guard';
+import { useAuth } from '@/modules/auth/hooks/use-auth';
 import { UpdateCycleDialog } from '@/modules/cycles/components/dialogs/update-cycle-dialog';
 import { useDeleteCycleMutation } from '@/modules/cycles/hooks/mutations';
 import { ApiPermissions } from '@/modules/shared/constants/permissions';
@@ -27,70 +27,78 @@ import { ApiPermissions } from '@/modules/shared/constants/permissions';
 export function CycleActions({ cycle }: CycleActionsProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { hasPermissions } = useAuth();
 
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
 
   const deleteMutation = useDeleteCycleMutation({ cycleId: cycle.id });
 
-  return (
-    <PermissionGuard
-      permissions={[ApiPermissions.Cycles.UPDATE, ApiPermissions.Cycles.DELETE]}
-    >
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon">
-            <DotsThreeIcon weight="bold" className="size-6" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <PermissionGuard permissions={ApiPermissions.Groups.UPDATE}>
-            <DropdownMenuItem
-              onClick={() =>
-                navigate({
-                  to: '/app/cycles/$cycleId/groups',
-                  params: { cycleId: String(cycle.id) },
-                })
-              }
-            >
-              <UsersThreeIcon />
-              {t('cycles:actions.viewGroups')}
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-          </PermissionGuard>
-          <PermissionGuard permissions={ApiPermissions.Cycles.UPDATE}>
-            <DropdownMenuItem onClick={() => setEditOpen(true)}>
-              <PencilIcon />
-              {t('actions.edit')}
-            </DropdownMenuItem>
-          </PermissionGuard>
-          <PermissionGuard permissions={ApiPermissions.Cycles.DELETE}>
-            <DropdownMenuItem
-              variant="destructive"
-              onClick={() => setConfirmOpen(true)}
-            >
-              <TrashIcon />
-              {t('actions.delete')}
-            </DropdownMenuItem>
-          </PermissionGuard>
-        </DropdownMenuContent>
-      </DropdownMenu>
+  const canViewGroups = hasPermissions(ApiPermissions.Groups.READ);
+  const canUpdate = hasPermissions(ApiPermissions.Cycles.UPDATE);
+  const canDelete = hasPermissions(ApiPermissions.Cycles.DELETE);
 
-      <UpdateCycleDialog
-        cycle={cycle}
-        open={editOpen}
-        onOpenChange={setEditOpen}
-      />
+  if (canViewGroups || canUpdate || canDelete)
+    return (
+      <>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon">
+              <DotsThreeIcon weight="bold" className="size-6" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            {canViewGroups && (
+              <DropdownMenuItem
+                onClick={() =>
+                  navigate({
+                    to: '/app/cycles/$cycleId/groups',
+                    params: { cycleId: String(cycle.id) },
+                  })
+                }
+              >
+                <UsersThreeIcon />
+                {t('cycles:actions.viewGroups')}
+              </DropdownMenuItem>
+            )}
 
-      <DeleteConfirmationDialog
-        open={confirmOpen}
-        onOpenChange={setConfirmOpen}
-        onConfirm={() => deleteMutation.mutate()}
-        isPending={deleteMutation.isPending}
-        name={cycle.name}
-      />
-    </PermissionGuard>
-  );
+            {canViewGroups && [canUpdate, canDelete].some(Boolean) && (
+              <DropdownMenuSeparator />
+            )}
+
+            {canUpdate && (
+              <DropdownMenuItem onClick={() => setEditOpen(true)}>
+                <PencilIcon />
+                {t('actions.edit')}
+              </DropdownMenuItem>
+            )}
+            {canDelete && (
+              <DropdownMenuItem
+                variant="destructive"
+                onClick={() => setConfirmOpen(true)}
+              >
+                <TrashIcon />
+                {t('actions.delete')}
+              </DropdownMenuItem>
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <UpdateCycleDialog
+          cycle={cycle}
+          open={editOpen}
+          onOpenChange={setEditOpen}
+        />
+
+        <DeleteConfirmationDialog
+          open={confirmOpen}
+          onOpenChange={setConfirmOpen}
+          onConfirm={() => deleteMutation.mutate()}
+          isPending={deleteMutation.isPending}
+          name={cycle.name}
+        />
+      </>
+    );
 }
 
 export type CycleActionsProps = { cycle: Cycle };

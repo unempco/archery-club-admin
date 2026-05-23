@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import {
+  branchesLookupSearchSchema,
   branchesSearchSchema,
   branchSchema,
   createBranchFormSchema,
@@ -12,3 +13,6 @@ export type CreateBranchFormData = z.infer<typeof createBranchFormSchema>;
 export type UpdateBranchFormData = z.infer<typeof updateBranchFormSchema>;
 
 export type BranchesSearchParams = z.infer<typeof branchesSearchSchema>;
+export type BranchesLookupSearchParams = z.infer<
+  typeof branchesLookupSearchSchema
+>;

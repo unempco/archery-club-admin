@@ -29,6 +29,7 @@ export const updateCycleFormSchema = cycleSchema.pick({
 });
 
 export const cyclesFiltersSchema = z.object({
+  status: z.enum(cycleStatuses).optional().catch(undefined),
   branchId: z.string().optional().catch(''),
   search: z.string().optional().catch(''),
   includeDeleted: z.boolean().optional().catch(false),
@@ -36,6 +37,11 @@ export const cyclesFiltersSchema = z.object({
 export const cyclesSearchSchema = paginationSearchSchema.extend(
   cyclesFiltersSchema.shape,
 );
+export const cyclesLookupSearchSchema = cyclesFiltersSchema.pick({
+  status: true,
+  branchId: true,
+  includeDeleted: true,
+});
 
 //==================>By Branch<======================//
 

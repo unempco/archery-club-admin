@@ -4,6 +4,7 @@ import type { ColumnDef } from '@tanstack/react-table';
 import { DataTableCell } from '@/core/components/data/data-table-cell';
 import { DataTableHeader } from '@/core/components/data/data-table-header';
 import { DataTableColumnType } from '@/core/constants/data-table';
+import { DataTableMaintenanceLogActionsCell } from '@/modules/maintenance-logs/componentes/data/data-table-maintenance-log-actions-cell';
 
 export const maintenanceLogsTableColumns: ColumnDef<MaintenanceLog>[] = [
   {
@@ -52,9 +53,18 @@ export const maintenanceLogsTableColumns: ColumnDef<MaintenanceLog>[] = [
     header: DataTableHeader,
     cell: DataTableCell,
   },
-  // {
-  //   id: 'actions',
-  //   cell: MaintenanceLogActions,
-  //   enableHiding: false,
-  // },
+  {
+    accessorKey: 'deletedAt',
+    meta: {
+      headerI18nKey: 'maintenanceLogs:fields.deletedAt',
+      columnType: DataTableColumnType.DATETIME,
+    },
+    header: DataTableHeader,
+    cell: DataTableCell,
+  },
+  {
+    id: 'actions',
+    cell: DataTableMaintenanceLogActionsCell,
+    enableHiding: false,
+  },
 ];

@@ -11,6 +11,7 @@ import { FieldGroup } from '@/core/components/ui/field';
 import { Spinner } from '@/core/components/ui/spinner';
 import { assignTargetsFormSchema } from '@/modules/sessions/schemas';
 import { targetsLookupQueryOptions } from '@/modules/targets/api/query-options';
+import { TargetStatus } from '@/modules/targets/constants';
 
 export function AssignSessionTargetsForm({
   branchId,
@@ -22,7 +23,7 @@ export function AssignSessionTargetsForm({
 }: SessionFormProps) {
   const { t } = useTranslation();
   const { data: targets, isSuccess: targetsSuccess } = useQuery(
-    targetsLookupQueryOptions({ branchId }),
+    targetsLookupQueryOptions({ branchId, status: TargetStatus.ACTIVE }),
   );
 
   const form = useForm({

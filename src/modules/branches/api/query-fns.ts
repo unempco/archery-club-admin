@@ -1,5 +1,6 @@
 import type {
   Branch,
+  BranchesLookupSearchParams,
   BranchesSearchParams,
   CreateBranchFormData,
   UpdateBranchFormData,
@@ -10,8 +11,10 @@ import api from '@/core/api';
 
 export const BRANCHES_MODULE_NAME = 'branches';
 
-export async function getAllBranches() {
-  return await api.get<Lookup[]>(`/${BRANCHES_MODULE_NAME}/lookup`);
+export async function getAllBranches(params: BranchesLookupSearchParams) {
+  return await api.get<Lookup[]>(`/${BRANCHES_MODULE_NAME}/lookup`, {
+    query: params,
+  });
 }
 
 export async function getBranchesList(params: BranchesSearchParams) {
