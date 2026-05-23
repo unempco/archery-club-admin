@@ -73,6 +73,15 @@ export const branchesTableColumns: ColumnDef<Branch>[] = [
     cell: DataTableCell,
   },
   {
+    accessorKey: 'deletedAt',
+    meta: {
+      headerI18nKey: 'branches:fields.deletedAt',
+      columnType: DataTableColumnType.DATETIME,
+    },
+    header: DataTableHeader,
+    cell: DataTableCell,
+  },
+  {
     id: 'actions',
     cell: DataTableBranchActionsCell,
     enableHiding: false,

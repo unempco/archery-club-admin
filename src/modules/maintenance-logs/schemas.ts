@@ -6,6 +6,8 @@ export const maintenanceLogSchema = z.object({
   // Server-generated fields
   id: z.number(),
   key: z.string(),
+  deletedAt: z.string().nullable(),
+  isDeleted: z.boolean(),
   // Form fields
   targetId: z.coerce.number('Target is required'),
   performedAt: z.coerce.date(),

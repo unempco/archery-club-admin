@@ -54,6 +54,15 @@ export const maintenanceLogsTableColumns: ColumnDef<MaintenanceLog>[] = [
     cell: DataTableCell,
   },
   {
+    accessorKey: 'deletedAt',
+    meta: {
+      headerI18nKey: 'maintenanceLogs:fields.deletedAt',
+      columnType: DataTableColumnType.DATETIME,
+    },
+    header: DataTableHeader,
+    cell: DataTableCell,
+  },
+  {
     id: 'actions',
     cell: DataTableMaintenanceLogActionsCell,
     enableHiding: false,

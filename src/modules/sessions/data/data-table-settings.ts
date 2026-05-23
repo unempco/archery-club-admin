@@ -81,6 +81,15 @@ export const sessionsTableColumns: ColumnDef<Session>[] = [
     cell: DataTableCell,
   },
   {
+    accessorKey: 'deletedAt',
+    meta: {
+      headerI18nKey: 'sessions:fields.deletedAt',
+      columnType: DataTableColumnType.DATETIME,
+    },
+    header: DataTableHeader,
+    cell: DataTableCell,
+  },
+  {
     id: 'actions',
     cell: DataTableSessionActionsCell,
     enableHiding: false,

@@ -10,6 +10,8 @@ export const sessionSchema = z.object({
   scheduledAt: z.string(),
   groupId: z.string(),
   branchId: z.number(),
+  deletedAt: z.string().nullable(),
+  isDeleted: z.boolean(),
   // Form fields
   notes: z.string().optional().nullable(),
   durationMinutes: z.number(),

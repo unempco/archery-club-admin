@@ -6,10 +6,10 @@ import { groupStatuses } from '@/modules/groups/constants';
 export const groupSchema = z.object({
   // Server-generated fields
   id: z.number(),
-  isDeleted: z.boolean(),
-  deletedAt: z.string().nullable(),
   createdAt: z.string(),
   status: z.enum(groupStatuses),
+  deletedAt: z.string().nullable(),
+  isDeleted: z.boolean(),
   // Form fields
   name: z.string().min(1, 'Name is required'),
   cycleId: z.coerce.number('Cycle is required'),
