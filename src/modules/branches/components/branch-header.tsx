@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 import { DeleteConfirmationDialog } from '@/core/components/delete-confirmation-dialog';
 import { Button } from '@/core/components/ui/button';
-import { PermissionGuard } from '@/modules/auth/components/permissions-guard';
+import { useAuth } from '@/modules/auth/hooks/use-auth';
 import { UpdateBranchDialog } from '@/modules/branches/components/dialogs/update-branch-dialog';
 import { useDeleteBranchMutation } from '@/modules/branches/hooks/mutations';
 import { PageHeader } from '@/modules/shared/components/page-header';
@@ -16,6 +16,7 @@ import { ApiPermissions } from '@/modules/shared/constants/permissions';
 export function BranchHeader({ branch }: BranchHeaderProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { hasPermissions } = useAuth();
 
   const [editOpen, setEditOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -25,6 +26,9 @@ export function BranchHeader({ branch }: BranchHeaderProps) {
     onSuccess: () => navigate({ to: '/app/branches' }),
   });
 
+  const canUpdate = hasPermissions(ApiPermissions.Branches.UPDATE);
+  const canDelete = hasPermissions(ApiPermissions.Branches.DELETE);
+
   return (
     <>
       <PageHeader
@@ -33,17 +37,17 @@ export function BranchHeader({ branch }: BranchHeaderProps) {
         enableBack
         backToFallback="/app/branches/"
       >
-        <PermissionGuard permissions={ApiPermissions.Branches.UPDATE}>
+        {canUpdate && (
           <Button onClick={() => setEditOpen(true)}>
             <PencilIcon />
             {t('actions.edit')}
           </Button>
-        </PermissionGuard>
-        <PermissionGuard permissions={ApiPermissions.Branches.DELETE}>
+        )}
+        {canDelete && (
           <Button variant="destructive" onClick={() => setConfirmOpen(true)}>
             <TrashIcon />
           </Button>
-        </PermissionGuard>
+        )}
       </PageHeader>
 
       <UpdateBranchDialog

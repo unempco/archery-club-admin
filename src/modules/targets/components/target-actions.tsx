@@ -19,7 +19,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/core/components/ui/dropdown-menu';
-import { PermissionGuard } from '@/modules/auth/components/permissions-guard';
+import { useAuth } from '@/modules/auth/hooks/use-auth';
 import { ApiPermissions } from '@/modules/shared/constants/permissions';
 import { UpdateTargetDialog } from '@/modules/targets/components/dialogs/update-target-dialog';
 import { useDeleteTargetMutation } from '@/modules/targets/hooks/mutations';
@@ -27,75 +27,78 @@ import { useDeleteTargetMutation } from '@/modules/targets/hooks/mutations';
 export function TargetActions({ target }: TargetActionsProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { hasPermissions } = useAuth();
 
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
 
   const deleteMutation = useDeleteTargetMutation({ targetId: target.id });
 
-  return (
-    <PermissionGuard
-      permissions={[
-        ApiPermissions.Targets.UPDATE,
-        ApiPermissions.Targets.DELETE,
-      ]}
-    >
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon">
-            <DotsThreeIcon weight="bold" className="size-6" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <PermissionGuard permissions={ApiPermissions.MaintenanceLogs.READ}>
-            <DropdownMenuItem
-              onClick={() =>
-                navigate({
-                  to: '/app/targets/$targetId/maintenance-logs',
-                  params: { targetId: String(target.id) },
-                })
-              }
-            >
-              <ClipboardIcon />
-              {t('targets:actions.viewLogs')}
-            </DropdownMenuItem>
-          </PermissionGuard>
-          <PermissionGuard permissions={ApiPermissions.MaintenanceLogs.READ}>
-            <DropdownMenuSeparator />
-          </PermissionGuard>
-          <PermissionGuard permissions={ApiPermissions.Targets.UPDATE}>
-            <DropdownMenuItem onClick={() => setEditOpen(true)}>
-              <PencilIcon />
-              {t('actions.edit')}
-            </DropdownMenuItem>
-          </PermissionGuard>
-          <PermissionGuard permissions={ApiPermissions.Targets.DELETE}>
-            <DropdownMenuItem
-              variant="destructive"
-              onClick={() => setConfirmOpen(true)}
-            >
-              <TrashIcon />
-              {t('actions.delete')}
-            </DropdownMenuItem>
-          </PermissionGuard>
-        </DropdownMenuContent>
-      </DropdownMenu>
-
-      <UpdateTargetDialog
-        target={target}
-        open={editOpen}
-        onOpenChange={setEditOpen}
-      />
-
-      <DeleteConfirmationDialog
-        open={confirmOpen}
-        onOpenChange={setConfirmOpen}
-        onConfirm={() => deleteMutation.mutate()}
-        isPending={deleteMutation.isPending}
-        name={target.name}
-      />
-    </PermissionGuard>
+  const canViewMaintenanceLogs = hasPermissions(
+    ApiPermissions.MaintenanceLogs.READ,
   );
+  const canUpdate = hasPermissions(ApiPermissions.Targets.UPDATE);
+  const canDelete = hasPermissions(ApiPermissions.Targets.DELETE);
+
+  if (canViewMaintenanceLogs || canUpdate || canDelete)
+    return (
+      <>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon">
+              <DotsThreeIcon weight="bold" className="size-6" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            {canViewMaintenanceLogs && (
+              <DropdownMenuItem
+                onClick={() =>
+                  navigate({
+                    to: '/app/targets/$targetId/maintenance-logs',
+                    params: { targetId: String(target.id) },
+                  })
+                }
+              >
+                <ClipboardIcon />
+                {t('targets:actions.viewLogs')}
+              </DropdownMenuItem>
+            )}
+            {canViewMaintenanceLogs && [canUpdate, canDelete].some(Boolean) && (
+              <DropdownMenuSeparator />
+            )}
+            {canUpdate && (
+              <DropdownMenuItem onClick={() => setEditOpen(true)}>
+                <PencilIcon />
+                {t('actions.edit')}
+              </DropdownMenuItem>
+            )}
+            {canDelete && (
+              <DropdownMenuItem
+                variant="destructive"
+                onClick={() => setConfirmOpen(true)}
+              >
+                <TrashIcon />
+                {t('actions.delete')}
+              </DropdownMenuItem>
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <UpdateTargetDialog
+          target={target}
+          open={editOpen}
+          onOpenChange={setEditOpen}
+        />
+
+        <DeleteConfirmationDialog
+          open={confirmOpen}
+          onOpenChange={setConfirmOpen}
+          onConfirm={() => deleteMutation.mutate()}
+          isPending={deleteMutation.isPending}
+          name={target.name}
+        />
+      </>
+    );
 }
 
 export type TargetActionsProps = {
