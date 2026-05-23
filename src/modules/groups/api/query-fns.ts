@@ -2,6 +2,7 @@ import type {
   CreateGroupFormData,
   CycleGroupsSearchParams,
   Group,
+  GroupsLookupSearchParams,
   GroupsSearchParams,
   UpdateGroupFormData,
 } from '@/modules/groups/types';
@@ -12,8 +13,10 @@ import { CYCLES_MODULE_NAME } from '@/modules/cycles/api/query-fns';
 
 export const GROUPS_MODULE_NAME = 'groups';
 
-export async function getAllGroups() {
-  return await api.get<Lookup[]>(`/${GROUPS_MODULE_NAME}/lookup`);
+export async function getAllGroups(params: GroupsLookupSearchParams) {
+  return await api.get<Lookup[]>(`/${GROUPS_MODULE_NAME}/lookup`, {
+    query: params,
+  });
 }
 
 export async function getGroupsList(params: GroupsSearchParams) {

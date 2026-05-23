@@ -26,6 +26,7 @@ export const updateSessionFormSchema = sessionSchema.pick({
 export const assignTargetsFormSchema = sessionSchema.pick({ targetIds: true });
 
 export const sessionsFiltersSchema = z.object({
+  status: z.enum(sessionStatuses).optional().catch(undefined),
   groupId: z.string().optional().catch(''),
   includeDeleted: z.boolean().optional().catch(false),
 });

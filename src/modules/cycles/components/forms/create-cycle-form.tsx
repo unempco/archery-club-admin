@@ -13,6 +13,7 @@ import { Button } from '@/core/components/ui/button';
 import { FieldGroup } from '@/core/components/ui/field';
 import { Spinner } from '@/core/components/ui/spinner';
 import { branchesLookupQueryOptions } from '@/modules/branches/api/query-options';
+import { BranchStatus } from '@/modules/branches/constants';
 import { createCycleFormSchema } from '@/modules/cycles/schemas';
 
 export function CreateCycleForm({
@@ -24,7 +25,7 @@ export function CreateCycleForm({
 }: CycleFormProps) {
   const { t } = useTranslation();
   const { data: branches, isSuccess: branchesSuccess } = useQuery(
-    branchesLookupQueryOptions(),
+    branchesLookupQueryOptions({ status: BranchStatus.ACTIVE }),
   );
 
   const form = useForm({

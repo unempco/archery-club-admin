@@ -12,6 +12,7 @@ import { Button } from '@/core/components/ui/button';
 import { FieldGroup } from '@/core/components/ui/field';
 import { Spinner } from '@/core/components/ui/spinner';
 import { cyclesLookupQueryOptions } from '@/modules/cycles/api/query-options';
+import { CycleStatus } from '@/modules/cycles/constants';
 import { createGroupFormSchema } from '@/modules/groups/schemas';
 
 export function CreateGroupForm({
@@ -23,7 +24,7 @@ export function CreateGroupForm({
 }: GroupFormProps) {
   const { t } = useTranslation();
   const { data: cycles, isSuccess: cyclesSuccess } = useQuery(
-    cyclesLookupQueryOptions(),
+    cyclesLookupQueryOptions({ status: CycleStatus.ACTIVE }),
   );
 
   const form = useForm({

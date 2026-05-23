@@ -11,6 +11,7 @@ import { Button } from '@/core/components/ui/button';
 import { FieldGroup } from '@/core/components/ui/field';
 import { Spinner } from '@/core/components/ui/spinner';
 import { branchesLookupQueryOptions } from '@/modules/branches/api/query-options';
+import { BranchStatus } from '@/modules/branches/constants';
 import { createTargetFormSchema } from '@/modules/targets/schemas';
 
 export function CreateTargetForm({
@@ -22,7 +23,7 @@ export function CreateTargetForm({
 }: TargetFormProps) {
   const { t } = useTranslation();
   const { data: branches, isSuccess: branchesSuccess } = useQuery(
-    branchesLookupQueryOptions(),
+    branchesLookupQueryOptions({ status: BranchStatus.ACTIVE }),
   );
 
   const form = useForm({

@@ -26,7 +26,7 @@ export function CreateMaintenanceLogForm({
 }: maintenanceLogFormProps) {
   const { t } = useTranslation();
   const { data: targets, isSuccess: targetSuccess } = useQuery(
-    targetsLookupQueryOptions({}),
+    targetsLookupQueryOptions(),
   );
   const timeInputId = useId();
 

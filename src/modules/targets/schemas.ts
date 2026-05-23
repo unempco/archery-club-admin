@@ -26,6 +26,7 @@ export const updateTargetFormSchema = targetSchema.pick({
 });
 
 export const targetsFiltersSchema = z.object({
+  status: z.enum(targetStatuses).optional().catch(undefined),
   branchId: z.number().optional().catch(undefined),
   search: z.string().optional().catch(''),
   includeDeleted: z.boolean().optional().catch(false),
@@ -33,8 +34,10 @@ export const targetsFiltersSchema = z.object({
 export const targetsSearchSchema = paginationSearchSchema.extend(
   targetsFiltersSchema.shape,
 );
-export const targetsLookupSearchSchema = targetsSearchSchema.pick({
+export const targetsLookupSearchSchema = targetsFiltersSchema.pick({
+  status: true,
   branchId: true,
+  includeDeleted: true,
 });
 
 //=======================>By Branch<========================//

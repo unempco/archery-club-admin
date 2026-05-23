@@ -2,6 +2,7 @@ import type {
   BranchCyclesSearchParams,
   CreateCycleFormData,
   Cycle,
+  CyclesLookupSearchParams,
   CyclesSearchParams,
   UpdateCycleFormData,
 } from '@/modules/cycles/types';
@@ -12,8 +13,10 @@ import { BRANCHES_MODULE_NAME } from '@/modules/branches/api/query-fns';
 
 export const CYCLES_MODULE_NAME = 'cycles';
 
-export async function getAllCycles() {
-  return await api.get<Lookup[]>(`/${CYCLES_MODULE_NAME}/lookup`);
+export async function getAllCycles(params: CyclesLookupSearchParams) {
+  return await api.get<Lookup[]>(`/${CYCLES_MODULE_NAME}/lookup`, {
+    query: params,
+  });
 }
 
 export async function getCyclesList(params: CyclesSearchParams) {

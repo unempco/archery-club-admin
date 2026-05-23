@@ -6,7 +6,6 @@ import type {
 import { queryOptions } from '@tanstack/react-query';
 
 import {
-  getAllSessions,
   getGroupSessionsList,
   getSessionById,
   getSessionsList,
@@ -17,14 +16,6 @@ export const sessionsIndexQueryOptions = (params: SessionsSearchParams) =>
     queryKey: ['sessions', params],
     queryFn: () => getSessionsList(params),
   });
-
-export const sessionsLookupQueryOptions = () => {
-  return queryOptions({
-    queryKey: ['sessions', 'lookup'],
-    queryFn: () => getAllSessions(),
-    staleTime: 1000 * 60, // 1 minute to avoid reload on multiple forms in a short time
-  });
-};
 
 export const sessionQueryOptions = (id: number) =>
   queryOptions({

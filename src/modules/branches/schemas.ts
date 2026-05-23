@@ -34,9 +34,14 @@ export const updateBranchFormSchema = branchSchema.pick({
 });
 
 export const branchesFiltersSchema = z.object({
+  status: z.enum(branchStatuses).optional().catch(undefined),
   search: z.string().optional().catch(''),
   includeDeleted: z.boolean().optional().catch(false),
 });
 export const branchesSearchSchema = paginationSearchSchema.extend(
   branchesFiltersSchema.shape,
 );
+export const branchesLookupSearchSchema = branchesFiltersSchema.pick({
+  status: true,
+  includeDeleted: true,
+});

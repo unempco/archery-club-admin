@@ -34,6 +34,7 @@ export const updateGroupFormSchema = groupSchema.pick({
 });
 
 export const groupsFiltersSchema = z.object({
+  status: z.enum(groupStatuses).optional().catch(undefined),
   cycleId: z.string().optional().catch(''),
   search: z.string().optional().catch(''),
   includeDeleted: z.boolean().optional().catch(false),
@@ -41,6 +42,11 @@ export const groupsFiltersSchema = z.object({
 export const groupsSearchSchema = paginationSearchSchema.extend(
   groupsFiltersSchema.shape,
 );
+export const groupsLookupSearchSchema = groupsFiltersSchema.pick({
+  status: true,
+  cycleId: true,
+  includeDeleted: true,
+});
 
 //====================>ByCycle<===================//
 

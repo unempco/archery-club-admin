@@ -5,16 +5,11 @@ import type {
   SessionsSearchParams,
   UpdateSessionFormData,
 } from '@/modules/sessions/types';
-import type { Lookup } from '@/modules/shared/types';
 
 import api from '@/core/api';
 import { GROUPS_MODULE_NAME } from '@/modules/groups/api/query-fns';
 
 export const SESSIONS_MODULE_NAME = 'sessions';
-
-export async function getAllSessions() {
-  return await api.get<Lookup[]>(`/${SESSIONS_MODULE_NAME}/lookup`);
-}
 
 export async function getSessionsList(params: SessionsSearchParams) {
   return await api.getList<Session>(SESSIONS_MODULE_NAME, {
