@@ -1,3 +1,5 @@
+[![Deploy frontend](https://github.com/unempco/archery-club-client/actions/workflows/deploy.yml/badge.svg)](https://github.com/unempco/archery-club-client/actions/workflows/deploy.yml)
+
 # React Admin Template
 
 A modern, production-ready admin dashboard template built with React, TypeScript, and a carefully curated stack of tools for building scalable, type-safe web applications.
