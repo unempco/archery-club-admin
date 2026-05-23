@@ -27,6 +27,7 @@ import { Route as AppCyclesRouteRouteImport } from './routes/app/cycles/route'
 import { Route as AppBranchesRouteRouteImport } from './routes/app/branches/route'
 import { Route as AppTargetsIndexRouteImport } from './routes/app/targets/index'
 import { Route as AppSessionsIndexRouteImport } from './routes/app/sessions/index'
+import { Route as AppMaintenanceLogsIndexRouteImport } from './routes/app/maintenance-logs/index'
 import { Route as AppGroupsIndexRouteImport } from './routes/app/groups/index'
 import { Route as AppDummiesIndexRouteImport } from './routes/app/dummies/index'
 import { Route as AppCyclesIndexRouteImport } from './routes/app/cycles/index'
@@ -137,6 +138,11 @@ const AppSessionsIndexRoute = AppSessionsIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AppSessionsRouteRoute,
+} as any)
+const AppMaintenanceLogsIndexRoute = AppMaintenanceLogsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppMaintenanceLogsRouteRoute,
 } as any)
 const AppGroupsIndexRoute = AppGroupsIndexRouteImport.update({
   id: '/',
@@ -256,7 +262,7 @@ export interface FileRoutesByFullPath {
   '/app/cycles': typeof AppCyclesRouteRouteWithChildren
   '/app/dummies': typeof AppDummiesRouteRouteWithChildren
   '/app/groups': typeof AppGroupsRouteRouteWithChildren
-  '/app/maintenance-logs': typeof AppMaintenanceLogsRouteRoute
+  '/app/maintenance-logs': typeof AppMaintenanceLogsRouteRouteWithChildren
   '/app/roles': typeof AppRolesRouteRoute
   '/app/sessions': typeof AppSessionsRouteRouteWithChildren
   '/app/targets': typeof AppTargetsRouteRouteWithChildren
@@ -274,6 +280,7 @@ export interface FileRoutesByFullPath {
   '/app/cycles/': typeof AppCyclesIndexRoute
   '/app/dummies/': typeof AppDummiesIndexRoute
   '/app/groups/': typeof AppGroupsIndexRoute
+  '/app/maintenance-logs/': typeof AppMaintenanceLogsIndexRoute
   '/app/sessions/': typeof AppSessionsIndexRoute
   '/app/targets/': typeof AppTargetsIndexRoute
   '/app/branches/$branchId/cycles': typeof AppBranchesBranchIdCyclesRoute
@@ -291,7 +298,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/app/maintenance-logs': typeof AppMaintenanceLogsRouteRoute
   '/app/roles': typeof AppRolesRouteRoute
   '/app/users': typeof AppUsersRouteRoute
   '/app/about': typeof AppAboutRoute
@@ -302,6 +308,7 @@ export interface FileRoutesByTo {
   '/app/cycles': typeof AppCyclesIndexRoute
   '/app/dummies': typeof AppDummiesIndexRoute
   '/app/groups': typeof AppGroupsIndexRoute
+  '/app/maintenance-logs': typeof AppMaintenanceLogsIndexRoute
   '/app/sessions': typeof AppSessionsIndexRoute
   '/app/targets': typeof AppTargetsIndexRoute
   '/app/branches/$branchId/cycles': typeof AppBranchesBranchIdCyclesRoute
@@ -325,7 +332,7 @@ export interface FileRoutesById {
   '/app/cycles': typeof AppCyclesRouteRouteWithChildren
   '/app/dummies': typeof AppDummiesRouteRouteWithChildren
   '/app/groups': typeof AppGroupsRouteRouteWithChildren
-  '/app/maintenance-logs': typeof AppMaintenanceLogsRouteRoute
+  '/app/maintenance-logs': typeof AppMaintenanceLogsRouteRouteWithChildren
   '/app/roles': typeof AppRolesRouteRoute
   '/app/sessions': typeof AppSessionsRouteRouteWithChildren
   '/app/targets': typeof AppTargetsRouteRouteWithChildren
@@ -343,6 +350,7 @@ export interface FileRoutesById {
   '/app/cycles/': typeof AppCyclesIndexRoute
   '/app/dummies/': typeof AppDummiesIndexRoute
   '/app/groups/': typeof AppGroupsIndexRoute
+  '/app/maintenance-logs/': typeof AppMaintenanceLogsIndexRoute
   '/app/sessions/': typeof AppSessionsIndexRoute
   '/app/targets/': typeof AppTargetsIndexRoute
   '/app/branches/$branchId/cycles': typeof AppBranchesBranchIdCyclesRoute
@@ -385,6 +393,7 @@ export interface FileRouteTypes {
     | '/app/cycles/'
     | '/app/dummies/'
     | '/app/groups/'
+    | '/app/maintenance-logs/'
     | '/app/sessions/'
     | '/app/targets/'
     | '/app/branches/$branchId/cycles'
@@ -402,7 +411,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/login'
-    | '/app/maintenance-logs'
     | '/app/roles'
     | '/app/users'
     | '/app/about'
@@ -413,6 +421,7 @@ export interface FileRouteTypes {
     | '/app/cycles'
     | '/app/dummies'
     | '/app/groups'
+    | '/app/maintenance-logs'
     | '/app/sessions'
     | '/app/targets'
     | '/app/branches/$branchId/cycles'
@@ -453,6 +462,7 @@ export interface FileRouteTypes {
     | '/app/cycles/'
     | '/app/dummies/'
     | '/app/groups/'
+    | '/app/maintenance-logs/'
     | '/app/sessions/'
     | '/app/targets/'
     | '/app/branches/$branchId/cycles'
@@ -601,6 +611,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/app/sessions/'
       preLoaderRoute: typeof AppSessionsIndexRouteImport
       parentRoute: typeof AppSessionsRouteRoute
+    }
+    '/app/maintenance-logs/': {
+      id: '/app/maintenance-logs/'
+      path: '/'
+      fullPath: '/app/maintenance-logs/'
+      preLoaderRoute: typeof AppMaintenanceLogsIndexRouteImport
+      parentRoute: typeof AppMaintenanceLogsRouteRoute
     }
     '/app/groups/': {
       id: '/app/groups/'
@@ -846,6 +863,20 @@ const AppGroupsRouteRouteWithChildren = AppGroupsRouteRoute._addFileChildren(
   AppGroupsRouteRouteChildren,
 )
 
+interface AppMaintenanceLogsRouteRouteChildren {
+  AppMaintenanceLogsIndexRoute: typeof AppMaintenanceLogsIndexRoute
+}
+
+const AppMaintenanceLogsRouteRouteChildren: AppMaintenanceLogsRouteRouteChildren =
+  {
+    AppMaintenanceLogsIndexRoute: AppMaintenanceLogsIndexRoute,
+  }
+
+const AppMaintenanceLogsRouteRouteWithChildren =
+  AppMaintenanceLogsRouteRoute._addFileChildren(
+    AppMaintenanceLogsRouteRouteChildren,
+  )
+
 interface AppSessionsSessionIdRouteRouteChildren {
   AppSessionsSessionIdTargetsRoute: typeof AppSessionsSessionIdTargetsRoute
   AppSessionsSessionIdIndexRoute: typeof AppSessionsSessionIdIndexRoute
@@ -911,7 +942,7 @@ interface AppRouteRouteChildren {
   AppCyclesRouteRoute: typeof AppCyclesRouteRouteWithChildren
   AppDummiesRouteRoute: typeof AppDummiesRouteRouteWithChildren
   AppGroupsRouteRoute: typeof AppGroupsRouteRouteWithChildren
-  AppMaintenanceLogsRouteRoute: typeof AppMaintenanceLogsRouteRoute
+  AppMaintenanceLogsRouteRoute: typeof AppMaintenanceLogsRouteRouteWithChildren
   AppRolesRouteRoute: typeof AppRolesRouteRoute
   AppSessionsRouteRoute: typeof AppSessionsRouteRouteWithChildren
   AppTargetsRouteRoute: typeof AppTargetsRouteRouteWithChildren
@@ -927,7 +958,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppCyclesRouteRoute: AppCyclesRouteRouteWithChildren,
   AppDummiesRouteRoute: AppDummiesRouteRouteWithChildren,
   AppGroupsRouteRoute: AppGroupsRouteRouteWithChildren,
-  AppMaintenanceLogsRouteRoute: AppMaintenanceLogsRouteRoute,
+  AppMaintenanceLogsRouteRoute: AppMaintenanceLogsRouteRouteWithChildren,
   AppRolesRouteRoute: AppRolesRouteRoute,
   AppSessionsRouteRoute: AppSessionsRouteRouteWithChildren,
   AppTargetsRouteRoute: AppTargetsRouteRouteWithChildren,

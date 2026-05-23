@@ -18,9 +18,7 @@ export function CreateMaintenanceLogDialogTrigger({
   const { t } = useTranslation();
   const [open, onOpenChange] = useState(false);
 
-  const { targetId } = useParams({
-    from: '/app/targets/$targetId/maintenance-logs',
-  });
+  const { targetId } = useParams({ strict: false });
 
   const mutation = useCreateMaintenanceLogMutation({
     onSuccess: () => onOpenChange(false),

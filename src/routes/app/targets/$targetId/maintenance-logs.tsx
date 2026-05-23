@@ -1,4 +1,4 @@
-import type { MaintenanceLogsSearchParams } from '@/modules/maintenance-logs/types';
+import type { TargetMaintenanceLogsSearchParams } from '@/modules/maintenance-logs/types';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
@@ -9,12 +9,12 @@ import { createRouteHead } from '@/layout/lib/create-route-head';
 import { targetMaintenanceLogsQueryOptions } from '@/modules/maintenance-logs/api/query-options';
 import { MaintenanceLogsHeader } from '@/modules/maintenance-logs/componentes/maintenance-logs-header';
 import { maintenanceLogsTableColumns } from '@/modules/maintenance-logs/data/data-table-settings';
-import { maintenanceLogsSearchSchema } from '@/modules/maintenance-logs/schemas';
+import { targetMaintenanceLogsSearchSchema } from '@/modules/maintenance-logs/schemas';
 
 export const Route = createFileRoute('/app/targets/$targetId/maintenance-logs')(
   {
-    validateSearch: maintenanceLogsSearchSchema,
-    loaderDeps: ({ search }): MaintenanceLogsSearchParams => search,
+    validateSearch: targetMaintenanceLogsSearchSchema,
+    loaderDeps: ({ search }): TargetMaintenanceLogsSearchParams => search,
     loader: ({ context: { queryClient }, params: { targetId }, deps }) =>
       queryClient.ensureQueryData(
         targetMaintenanceLogsQueryOptions(Number(targetId), deps),
