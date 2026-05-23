@@ -1,27 +1,35 @@
-name: Deploy to production
+name: Deploy frontend
 
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
+
+concurrency:
+  group: production
+  cancel-in-progress: true
 
 jobs:
   deploy:
+    name: Build & deploy
     runs-on: self-hosted
     timeout-minutes: 15
+    environment: production
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Create .env file
-        run: |
-          echo "VITE_BASE_API_URL=${{ secrets.VITE_BASE_API_URL }}" >> .env
-          echo "VITE_BROWSER_HISTORY=${{ secrets.VITE_BROWSER_HISTORY }}" >> .env
+      - name: Ensure proxy-net exists
+        run: docker network create proxy-net || true
 
       - name: Build and deploy
+        env:
+          VITE_BASE_API_URL: ${{ vars.BASE_API_URL }}
+          VITE_BROWSER_HISTORY: ${{ vars.ENABLE_BROWSER_HISTORY }}
         run: |
-          docker compose -f docker-compose.prod.yml -d --build
+          docker compose -f docker-compose.prod.yml up -d --build --remove-orphans
 
       - name: Clean up old images
         run: docker image prune -f
