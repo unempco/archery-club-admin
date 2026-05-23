@@ -71,7 +71,7 @@ export function useDeleteTargetMutation({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['targets'] });
       onSuccess?.();
-      toast.message(t('targets:messages.wasDeleted'));
+      toast.success(t('targets:messages.wasDeleted'));
     },
     onError: onMutationError(t),
   });

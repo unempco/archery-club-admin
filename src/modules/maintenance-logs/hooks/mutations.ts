@@ -72,7 +72,7 @@ export function useDeleteMaintenanceLogMutation({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['maintenanceLogs'] });
       onSuccess?.();
-      toast.message(t('maintenanceLogs:messages.wasDeleted'));
+      toast.success(t('maintenanceLogs:messages.wasDeleted'));
     },
     onError: onMutationError(t),
   });

@@ -79,7 +79,7 @@ export function useDeleteSessionMutation({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['sessions'] });
       onSuccess?.();
-      toast.message(t('sessions:messages.wasDeleted'));
+      toast.success(t('sessions:messages.wasDeleted'));
     },
     onError: onMutationError(t),
   });

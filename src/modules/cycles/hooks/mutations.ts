@@ -71,7 +71,7 @@ export function useDeleteCycleMutation({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cycles'] });
       onSuccess?.();
-      toast.message(t('cycles:messages.wasDeleted'));
+      toast.success(t('cycles:messages.wasDeleted'));
     },
     onError: onMutationError(t),
   });

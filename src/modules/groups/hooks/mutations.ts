@@ -71,7 +71,7 @@ export function useDeleteGroupMutation({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['groups'] });
       onSuccess?.();
-      toast.message(t('groups:messages.wasDeleted'));
+      toast.success(t('groups:messages.wasDeleted'));
     },
     onError: onMutationError(t),
   });

@@ -71,7 +71,7 @@ export function useDeleteBranchMutation({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['branches'] });
       onSuccess?.();
-      toast.message(t('branches:messages.wasDeleted'));
+      toast.success(t('branches:messages.wasDeleted'));
     },
     onError: onMutationError(t),
   });
